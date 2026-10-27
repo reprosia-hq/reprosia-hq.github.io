@@ -1,379 +1,103 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services — Reprosia</title>
-  <meta name="description" content="Expert implementation support for regulated R environments. Reproducibility audits, IQ/OQ/PQ validation, estimand specification, SAS to R migration, and training.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* ── Service cards ── */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.375rem;
-    }
-
-    .svc-card {
-      padding: 2rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-    .svc-card:hover {
-      border-color: var(--border-teal);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .svc-num {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--teal);
-      letter-spacing: 0.14em;
-      margin-bottom: 1.125rem;
-    }
-
-    .svc-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.375rem;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-      line-height: 1.25;
-    }
-
-    .svc-card p {
-      font-size: 0.875rem;
-      color: var(--text-mid);
-      line-height: 1.75;
-      margin-bottom: 1.25rem;
-    }
-
-    .svc-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.375rem;
-    }
-
-    /* ── How we work ── */
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-
-    .process-step {
-      padding: 1.75rem 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      position: relative;
-    }
-
-    .process-step::after {
-      content: '→';
-      position: absolute;
-      right: -1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--teal);
-      font-size: 1rem;
-      opacity: 0.4;
-    }
-    .process-step:last-child::after { display: none; }
-
-    .process-num {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--teal);
-      letter-spacing: 0.14em;
-      margin-bottom: 0.875rem;
-    }
-
-    .process-step h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1875rem;
-      font-weight: 400;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .process-step p {
-      font-size: 0.8125rem;
-      color: var(--text-mid);
-      line-height: 1.65;
-    }
-
-    /* ── Positioning note ── */
-    .positioning-strip {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem 2.5rem;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 2rem;
-      align-items: start;
-      margin-bottom: 3.5rem;
-    }
-
-    .pos-icon {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--teal);
-      letter-spacing: 0.1em;
-      padding-top: 0.2rem;
-      white-space: nowrap;
-    }
-
-    .pos-text {
-      font-size: 0.9375rem;
-      color: var(--text-mid);
-      line-height: 1.75;
-      font-weight: 300;
-    }
-    .pos-text strong { color: var(--text); font-weight: 500; }
-
-    @media (max-width: 900px) {
-      .services-grid { grid-template-columns: 1fr; }
-      .process-grid { grid-template-columns: repeat(2, 1fr); }
-      .process-step::after { display: none; }
-      .positioning-strip { grid-template-columns: 1fr; gap: 1rem; }
-    }
-    @media (max-width: 640px) {
-      .process-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Services | Reprosia</title>
+<meta name="description" content="Regulatory R implementation, reproducibility assessments, package validation, estimand specification, SAS-to-R migration and training, delivered by Ndoh Penn.">
+<link rel="canonical" href="https://reprosia.com/services.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F2F3F0">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Reprosia">
+<meta property="og:title" content="Services | Reprosia">
+<meta property="og:description" content="Regulatory R implementation, reproducibility assessments, package validation, estimand specification, SAS-to-R migration and training, delivered by Ndoh Penn.">
+<meta property="og:url" content="https://reprosia.com/services.html">
+<meta property="og:image" content="https://reprosia.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<!-- ─── NAV ─── -->
-<nav class="nav">
-  <a href="index.html" class="nav-logo">Repro<span>sia</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="platform.html">Platform</a></li>
-    <li><a href="services.html" class="active">Services</a></li>
-    <li><a href="use-cases.html">Use Cases</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="theme-toggle" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-    <a href="contact.html" class="btn btn-teal btn-sm">Get in touch</a>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+    <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a class="nav-link" href="platform.html">Platform</a><a class="nav-link" href="approach.html">Approach</a><a class="nav-link" href="use-cases.html">Use cases</a><a class="nav-link" href="services.html" aria-current="page">Services</a><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <button class="icon-btn" id="theme-toggle" type="button">Dark theme</button>
+    </nav>
   </div>
-  <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
-<nav class="nav-drawer">
-  <a href="index.html">Home</a>
-  <a href="platform.html">Platform</a>
-  <a href="services.html"  class="active">Services</a>
-  <a href="use-cases.html">Use Cases</a>
-  <a href="about.html">About</a>
-  <a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a>
-  <a href="contact.html" class="btn btn-teal btn-sm nav-cta-mobile">Request access</a>
-</nav>
+</header>
+<main id="main">
 
-<!-- ─── PAGE HERO ─── -->
-<section class="page-hero">
-  <div class="page-hero-bg"></div>
-  <div class="page-hero-inner">
-    <div class="eyebrow ruled">Services</div>
-    <h1 class="display display-lg">Expert support for<br><em>regulated R environments.</em></h1>
-    <p class="lead">We work directly with pharma, biotech, and CRO teams to implement reproducible, compliant R infrastructure — from initial setup through regulatory submission.</p>
-    <div class="btn-group">
-      <a href="contact.html" class="btn btn-teal">Discuss your project</a>
-      <a href="#services" class="btn btn-ghost">See what we offer</a>
-    </div>
-  </div>
-</section>
-
-<!-- ─── POSITIONING NOTE ─── -->
-<section class="section-sm">
-  <div class="container">
-    <div class="positioning-strip">
-      <div class="pos-icon">NOTE</div>
-      <div class="pos-text">
-        Our services are designed to complement the Reprosia platform — helping teams implement, validate, and get the most from their R infrastructure in regulated settings. Engagements are scoped individually based on your environment, programme stage, and regulatory context. <strong>All work is delivered by Ndoh Penn directly.</strong>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── SERVICES ─── -->
-<section class="section section-surface" id="services">
-  <div class="container">
-    <div class="eyebrow ruled">What we offer</div>
-    <h2 class="display display-md" style="margin-bottom:3.5rem">Six areas of<br><em>expert support.</em></h2>
-
-    <div class="services-grid">
-
-      <div class="svc-card reveal">
-        <div class="svc-num">01</div>
-        <h3>Regulatory R implementation</h3>
-        <p>End-to-end support for implementing R in GxP environments. This includes validation strategy, standard operating procedures, system validation documentation, and ongoing compliance support tailored to your regulatory obligations.</p>
-        <div class="svc-tags">
-          <span class="tag">GxP</span>
-          <span class="tag">21 CFR Part 11</span>
-          <span class="tag">SOPs</span>
-        </div>
-      </div>
-
-      <div class="svc-card reveal reveal-d1">
-        <div class="svc-num">02</div>
-        <h3>Reproducibility assessments</h3>
-        <p>Independent review of your R analysis pipeline. We identify reproducibility gaps, undocumented dependencies, and environment risks — and provide a prioritised remediation plan with practical recommendations your team can act on.</p>
-        <div class="svc-tags">
-          <span class="tag">Environment audit</span>
-          <span class="tag">Risk assessment</span>
-          <span class="tag">reproducr</span>
-        </div>
-      </div>
-
-      <div class="svc-card reveal reveal-d2">
-        <div class="svc-num">03</div>
-        <h3>Package validation (IQ/OQ/PQ)</h3>
-        <p>Validation of R and R packages to pharmaceutical industry standards. We produce Installation Qualification, Operational Qualification, and Performance Qualification documentation suitable for regulatory review and inspection.</p>
-        <div class="svc-tags">
-          <span class="tag">IQ / OQ / PQ</span>
-          <span class="tag">FDA</span>
-          <span class="tag">EMA</span>
-        </div>
-      </div>
-
-      <div class="svc-card reveal reveal-d3">
-        <div class="svc-num">04</div>
-        <h3>Estimand specification</h3>
-        <p>ICH E9(R1) estimand strategy support for your clinical trial programme. From protocol estimand definition through SAP implementation, we help teams build estimand frameworks that are scientifically sound and regulatorily defensible.</p>
-        <div class="svc-tags">
-          <span class="tag">ICH E9(R1)</span>
-          <span class="tag">SAP</span>
-          <span class="tag">estimandr</span>
-        </div>
-      </div>
-
-      <div class="svc-card reveal">
-        <div class="svc-num">05</div>
-        <h3>SAS → R migration support</h3>
-        <p>Structured transition from SAS to R in regulated environments. We provide equivalence testing between SAS and R outputs, parallel validation documentation, and migration audit trails suitable for agency review — while maintaining your compliance posture throughout.</p>
-        <div class="svc-tags">
-          <span class="tag">Equivalence testing</span>
-          <span class="tag">Migration audit</span>
-          <span class="tag">Validation bridging</span>
-        </div>
-      </div>
-
-      <div class="svc-card reveal reveal-d1">
-        <div class="svc-num">06</div>
-        <h3>Training and upskilling</h3>
-        <p>Tailored training for clinical statistics teams working in R. Topics range from R fundamentals and tidyverse through regulatory compliance, reproducible workflows, ICH E9(R1) estimand implementation, and Bayesian methods for regulated settings.</p>
-        <div class="svc-tags">
-          <span class="tag">R training</span>
-          <span class="tag">ICH E9(R1)</span>
-          <span class="tag">Bayesian methods</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ─── HOW WE WORK ─── -->
-<section class="section">
-  <div class="container">
-    <div class="eyebrow ruled">How we work</div>
-    <h2 class="display display-md" style="margin-bottom:0.875rem">A straightforward<br><em>engagement process.</em></h2>
-    <p style="font-size:1rem;color:var(--text-mid);max-width:520px;line-height:1.75;font-weight:300">Every engagement starts with a conversation. We scope work carefully, deliver directly, and stay available throughout.</p>
-    <div class="process-grid reveal">
-      <div class="process-step">
-        <div class="process-num">01</div>
-        <h3>Initial conversation</h3>
-        <p>We discuss your environment, programme stage, regulatory context, and what you need to achieve. No obligation.</p>
-      </div>
-      <div class="process-step">
-        <div class="process-num">02</div>
-        <h3>Scoping</h3>
-        <p>We define deliverables, timeline, and approach. Work is scoped to your specific situation — not a fixed package.</p>
-      </div>
-      <div class="process-step">
-        <div class="process-num">03</div>
-        <h3>Delivery</h3>
-        <p>Work is delivered by Ndoh Penn directly. You have a single point of contact with direct expertise throughout.</p>
-      </div>
-      <div class="process-step">
-        <div class="process-num">04</div>
-        <h3>Follow-on support</h3>
-        <p>We remain available after delivery for questions, regulatory queries, or follow-on work as your programme evolves.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA ─── -->
-<div class="cta-strip section-alt">
-  <div class="cta-strip-glow"></div>
-  <div class="container" style="position:relative;z-index:2">
-    <div class="eyebrow" style="justify-content:center">Get in touch</div>
-    <h2 class="display display-md" style="text-align:center;margin-bottom:1rem">Ready to discuss<br><em>your project?</em></h2>
-    <p class="lead" style="text-align:center">Tell us about your environment and what you are trying to achieve. We will get back to you within 48 hours.</p>
-    <div class="btn-group" style="justify-content:center">
-      <a href="contact.html" class="btn btn-teal">Start the conversation</a>
-      <a href="platform.html" class="btn btn-ghost">Explore the platform →</a>
-    </div>
-    <p class="cta-email">Or email <a href="mailto:team@reprosia.com">team@reprosia.com</a></p>
-  </div>
+<div class="wrap page-head">
+  <h1>Hands-on help from the person who wrote the packages.</h1>
+  <p class="lead">All work is delivered by Ndoh Penn directly. Engagements are scoped individually and run alongside the open-source tools.</p>
 </div>
-
-<!-- ─── FOOTER ─── -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="index.html" class="nav-logo">Repro<span>sia</span></a>
-      <p>AI-native pharma R&amp;D platform built on open-source foundations.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Platform</h4>
-      <ul>
-        <li><a href="platform.html">Overview</a></li>
-        <li><a href="platform.html#validate">Validate</a></li>
-        <li><a href="platform.html#reproduce">Reproduce</a></li>
-        <li><a href="platform.html#submit">Submit</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="use-cases.html">Use Cases</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Resources</h4>
-      <ul>
-        <li><a href="https://github.com/reposia-hq" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://reprostats.org" target="_blank" rel="noopener">ReproStats</a></li>
-        <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
-      </ul>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><h2>What I can help with.</h2></div>
+    <dl class="defs"><div><dt>Regulatory R implementation</dt><dd>Validation strategy, SOPs and system validation documentation for using R in GxP environments.</dd></div><div><dt>Reproducibility assessment</dt><dd>An independent review of an analysis pipeline: undocumented dependencies, environment risks and a prioritised remediation plan.</dd></div><div><dt>Package and environment validation</dt><dd>IQ/OQ/PQ documentation for R and R packages, ready for regulatory review.</dd></div><div><dt>Estimand specification</dt><dd>Support with ICH E9(R1) estimand strategy, from protocol definition through to implementation in the SAP.</dd></div><div><dt>SAS-to-R migration</dt><dd>Equivalence testing between SAS and R outputs, parallel validation documentation and a migration audit trail.</dd></div><div><dt>Training</dt><dd>Sessions for clinical statistics teams on R, reproducible workflows, estimands and Bayesian methods.</dd></div>
+      <div><dt>Qualification of AI-assisted workflows <span class="tag tag-plan" style="margin-left:6px">Planned</span></dt><dd>Evidence packs for teams adopting AI assistants in statistical programming. This follows the audited AI assist work and is not yet offered.</dd></div>
+    </dl>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><h2>How an engagement runs.</h2></div>
+    <ol class="steps">
+      <li class="step"><div><h3>Conversation</h3><p>We talk through your environment, your quality system and what a reviewer would ask.</p></div></li>
+      <li class="step"><div><h3>Scoping</h3><p>A short written scope with deliverables, timing and what you need to provide.</p></div></li>
+      <li class="step"><div><h3>Delivery</h3><p>Documents and code you own, plus the open-source tools where they help.</p></div></li>
+      <li class="step"><div><h3>Follow-up</h3><p>A review after delivery to deal with questions from QA or auditors.</p></div></li>
+    </ol>
+  </div>
+</section>
+<section class="section cta">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:0">
+      <h2>Start with a conversation.</h2>
+      <p class="lead">No pricing is listed because scope varies. Send a few lines about your situation.</p>
+      <div class="actions"><a class="btn" href="contact.html">Get in touch</a></div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Reprosia · Brussels, Belgium</span>
-    <span class="footer-copy">reprosia.com</span>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+        <p style="margin-top:12px">An audit layer for AI-assisted analysis in regulated R. Built on open-source packages.</p>
+      </div>
+      <div>
+        <h3>Site</h3>
+        <ul>
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="approach.html">Approach</a></li>
+          <li><a href="use-cases.html">Use cases</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source packages</a></li>
+          <li><a href="https://github.com/reprosia-hq" rel="noopener">GitHub organisation</a></li>
+          <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclaimer">Reprosia is an independent, early-stage project. No customers, certifications or regulatory endorsements are claimed. Software described here is designed around 21 CFR Part 11 and EU Annex 11; using it does not by itself make an organisation compliant. Validation and quality-system responsibilities stay with the regulated organisation. &copy; <span id="year">2026</span> Reprosia.</p>
   </div>
 </footer>
-
-<script src="main.js"></script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

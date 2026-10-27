@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approach: FDA and EMA AI principles mapped to evidence | Reprosia</title>
+<meta name="description" content="The ten joint FDA and EMA AI principles for drug development, mapped to the records Reprosia packages produce today, and where they fall short.">
+<link rel="canonical" href="https://reprosia.com/approach.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F2F3F0">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Reprosia">
+<meta property="og:title" content="Approach: FDA and EMA AI principles mapped to evidence | Reprosia">
+<meta property="og:description" content="The ten joint FDA and EMA AI principles for drug development, mapped to the records Reprosia packages produce today, and where they fall short.">
+<meta property="og:url" content="https://reprosia.com/approach.html">
+<meta property="og:image" content="https://reprosia.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+    <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a class="nav-link" href="platform.html">Platform</a><a class="nav-link" href="approach.html" aria-current="page">Approach</a><a class="nav-link" href="use-cases.html">Use cases</a><a class="nav-link" href="services.html">Services</a><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <button class="icon-btn" id="theme-toggle" type="button">Dark theme</button>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap page-head">
+  <h1>What the FDA and EMA AI principles ask for, and how far Reprosia gets you.</h1>
+  <p class="lead">In January 2026 the two agencies published ten joint guiding principles for AI across the drug lifecycle. They are non-binding. This table turns them into things you could show a reviewer.</p>
+</div>
+<section class="section">
+  <div class="wrap">
+    <div class="table-wrap">
+      <table style="min-width:860px">
+        <thead><tr><th scope="col">Principle</th><th scope="col">What to be able to show</th><th scope="col">What Reprosia gives you today</th><th scope="col">Support</th></tr></thead>
+        <tbody><tr><td data-label="Principle">Human-centric by design</td><td data-label="What to be able to show">Who reviewed, accepted, edited or rejected each AI output.</td><td data-label="What Reprosia gives you today">regulog keeps a user-attributed log. Capturing review decisions on AI outputs is in development.</td><td data-label="Support"><span class="tag">Partial</span></td></tr><tr><td data-label="Principle">Risk-based approach</td><td data-label="What to be able to show">Validation effort that scales with the tool's context of use and risk.</td><td data-label="What Reprosia gives you today">No software feature. Consulting can support the risk assessment.</td><td data-label="Support"><span class="tag tag-plan">Guidance only</span></td></tr><tr><td data-label="Principle">Adherence to standards</td><td data-label="What to be able to show">AI work sits inside existing GxP controls, audit trails included.</td><td data-label="What Reprosia gives you today">regulog is designed around 21 CFR Part 11 and EU Annex 11. You decide which AI records are in scope and document it.</td><td data-label="Support"><span class="tag tag-live">Supported</span></td></tr><tr><td data-label="Principle">Clear context of use</td><td data-label="What to be able to show">The task, scope and limits of each AI tool, written down.</td><td data-label="What Reprosia gives you today">No software feature. Consulting and templates only.</td><td data-label="Support"><span class="tag tag-plan">Guidance only</span></td></tr><tr><td data-label="Principle">Multidisciplinary expertise</td><td data-label="What to be able to show">Statisticians, QA, IT and regulatory staff working together.</td><td data-label="What Reprosia gives you today">Training and workshops.</td><td data-label="Support"><span class="tag tag-plan">Guidance only</span></td></tr><tr><td data-label="Principle">Data governance and documentation</td><td data-label="What to be able to show">Data sources, handling and lineage, tied to each run.</td><td data-label="What Reprosia gives you today">lineager traces rows and exclusions from source to analysis dataset.</td><td data-label="Support"><span class="tag tag-live">Supported</span></td></tr><tr><td data-label="Principle">Model design and development</td><td data-label="What to be able to show">Traceable development, versioned releases and frozen environments.</td><td data-label="What Reprosia gives you today">reproducr captures sessions and locks dependencies. It covers the R environment, not model training.</td><td data-label="Support"><span class="tag">Partial</span></td></tr><tr><td data-label="Principle">Risk-based performance assessment</td><td data-label="What to be able to show">Predefined metrics and acceptance criteria, with error monitoring.</td><td data-label="What Reprosia gives you today">reproducr flags drift when results change. Model-specific performance metrics are not covered.</td><td data-label="Support"><span class="tag">Partial</span></td></tr><tr><td data-label="Principle">Lifecycle management</td><td data-label="What to be able to show">Planned updates, re-validation and ongoing monitoring.</td><td data-label="What Reprosia gives you today">Drift detection and replay help. The change-control process is yours.</td><td data-label="Support"><span class="tag">Partial</span></td></tr><tr><td data-label="Principle">Clear, essential information</td><td data-label="What to be able to show">Documentation of intended use, capabilities and limits.</td><td data-label="What Reprosia gives you today">lineager and bayprior generate structured reports. AI-specific documentation templates are in development.</td><td data-label="Support"><span class="tag">Partial</span></td></tr></tbody>
+      </table>
+    </div>
+    <div class="callout" style="margin-top:36px">
+      <p><strong>Reading the table.</strong> Supported means an existing package produces the record. Partial means it covers part of the need, or the AI-specific part is still being built. Guidance only means help comes from consulting, not software.</p>
+      <p>Principle names and the evidence column paraphrase a <a href="https://intuitionlabs.ai/articles/fda-ema-good-ai-practice-drug-development-2" rel="noopener">third-party summary</a> of the January 2026 principles, not the agencies' own text. Read the official documents before you cite wording, and decide with your QA group which AI records fall under 21 CFR Part 11.</p>
+    </div>
+  </div>
+</section>
+<section class="section cta">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:0">
+      <h2>Want this mapped onto your own workflow?</h2>
+      <p class="lead">A short review can show which of these records you already keep and which you do not.</p>
+      <div class="actions"><a class="btn" href="contact.html">Talk to Reprosia</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+        <p style="margin-top:12px">An audit layer for AI-assisted analysis in regulated R. Built on open-source packages.</p>
+      </div>
+      <div>
+        <h3>Site</h3>
+        <ul>
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="approach.html">Approach</a></li>
+          <li><a href="use-cases.html">Use cases</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source packages</a></li>
+          <li><a href="https://github.com/reprosia-hq" rel="noopener">GitHub organisation</a></li>
+          <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclaimer">Reprosia is an independent, early-stage project. No customers, certifications or regulatory endorsements are claimed. Software described here is designed around 21 CFR Part 11 and EU Annex 11; using it does not by itself make an organisation compliant. Validation and quality-system responsibilities stay with the regulated organisation. &copy; <span id="year">2026</span> Reprosia.</p>
+  </div>
+</footer>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

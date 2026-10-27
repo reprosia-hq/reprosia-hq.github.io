@@ -1,646 +1,123 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Use Cases — Reprosia</title>
-  <meta name="description" content="How Reprosia serves pharma, biotech, CRO, and regulatory teams across the clinical development lifecycle.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Tab system */
-    .tab-bar {
-      display: flex;
-      gap: 0.25rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 3rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .tab-bar::-webkit-scrollbar { display: none; }
-
-    .tab-btn {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      padding: 0.875rem 1.125rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: color 0.2s, border-color 0.2s !important;
-      margin-bottom: -1px;
-    }
-    .tab-btn:hover { color: var(--text-mid); }
-    .tab-btn.active {
-      color: var(--teal);
-      border-bottom-color: var(--teal);
-    }
-
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
-
-    /* Case card */
-    .case-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-    .case-card:hover {
-      border-color: var(--border-teal);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-    .case-card-head {
-      padding: 2rem 2rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .case-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.67rem;
-      color: var(--teal);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 0.875rem;
-    }
-    .case-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.375rem;
-      font-weight: 400;
-      color: var(--text);
-      line-height: 1.25;
-      margin-bottom: 0.75rem;
-    }
-    .case-card-body { padding: 1.5rem 2rem 2rem; }
-    .case-card-body p {
-      font-size: 0.875rem;
-      color: var(--text-mid);
-      line-height: 1.75;
-      margin-bottom: 1.25rem;
-    }
-
-    .before-after {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: 1.25rem;
-    }
-    .ba-col { padding: 1rem; border-radius: 6px; }
-    .ba-before { background: rgba(220,80,60,0.05); border: 1px solid rgba(220,80,60,0.14); }
-    .ba-after  { background: var(--teal-dim); border: 1px solid var(--border-teal); }
-    .ba-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.625rem;
-    }
-    .ba-before .ba-label { color: #dc5040; }
-    .ba-after  .ba-label { color: var(--teal); }
-    .ba-col ul { list-style: none; }
-    .ba-col li {
-      font-size: 0.78rem;
-      color: var(--text-mid);
-      padding: 0.2rem 0;
-      padding-left: 1rem;
-      position: relative;
-    }
-    .ba-before li::before { content: '✗'; position: absolute; left: 0; color: #dc5040; font-size: 0.7rem; }
-    .ba-after  li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-size: 0.7rem; }
-
-    /* Phase timeline */
-    .phase-track {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin: 1.5rem 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .phase-track::-webkit-scrollbar { display: none; }
-    .phase {
-      flex-shrink: 0;
-      padding: 0.625rem 1rem;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--text-mid);
-      letter-spacing: 0.08em;
-      position: relative;
-    }
-    .phase.active {
-      background: var(--teal-dim);
-      border-color: var(--border-teal);
-      color: var(--teal);
-    }
-    .phase-arrow {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      padding: 0 0.375rem;
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 640px) {
-      .before-after { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use cases | Reprosia</title>
+<meta name="description" content="Reviewing AI-drafted code, tracing populations, documenting Bayesian priors, qualifying R environments and comparing SAS with R: what evidence each needs.">
+<link rel="canonical" href="https://reprosia.com/use-cases.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F2F3F0">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Reprosia">
+<meta property="og:title" content="Use cases | Reprosia">
+<meta property="og:description" content="Reviewing AI-drafted code, tracing populations, documenting Bayesian priors, qualifying R environments and comparing SAS with R: what evidence each needs.">
+<meta property="og:url" content="https://reprosia.com/use-cases.html">
+<meta property="og:image" content="https://reprosia.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<!-- ─── NAV ─── -->
-<nav class="nav">
-  <a href="index.html" class="nav-logo">Repro<span>sia</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="platform.html">Platform</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="use-cases.html" class="active">Use Cases</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="theme-toggle" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-    <a href="contact.html" class="btn btn-teal btn-sm">Request access</a>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+    <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a class="nav-link" href="platform.html">Platform</a><a class="nav-link" href="approach.html">Approach</a><a class="nav-link" href="use-cases.html" aria-current="page">Use cases</a><a class="nav-link" href="services.html">Services</a><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <button class="icon-btn" id="theme-toggle" type="button">Dark theme</button>
+    </nav>
   </div>
-  <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
-<nav class="nav-drawer">
-  <a href="index.html">Home</a>
-  <a href="platform.html">Platform</a>
-  <a href="services.html">Services</a>
-  <a href="use-cases.html"  class="active">Use Cases</a>
-  <a href="about.html">About</a>
-  <a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a>
-  <a href="contact.html" class="btn btn-teal btn-sm nav-cta-mobile">Request access</a>
-</nav>
+</header>
+<main id="main">
 
-<!-- ─── PAGE HERO ─── -->
-<section class="page-hero">
-  <div class="page-hero-bg"></div>
-  <div class="page-hero-inner">
-    <div class="eyebrow ruled">Use cases</div>
-    <h1 class="display display-lg">Built for teams where<br><em>precision matters.</em></h1>
-    <p class="lead">From Phase I to NDA. From clinical biostatistics to SAS migration. Reprosia scales with your regulatory obligation and clinical programme complexity.</p>
-  </div>
-</section>
-
-<!-- ─── TABS ─── -->
-<section class="section">
-  <div class="container">
-    <div class="tab-bar">
-      <button class="tab-btn active" data-tab-btn="all">All</button>
-      <button class="tab-btn" data-tab-btn="pharma">Pharma &amp; Biotech</button>
-      <button class="tab-btn" data-tab-btn="regulatory">Regulatory Affairs</button>
-      <button class="tab-btn" data-tab-btn="cro">CRO Teams</button>
-      <button class="tab-btn" data-tab-btn="migration">SAS → R Migration</button>
-      <button class="tab-btn" data-tab-btn="bayesian">Bayesian Analysis</button>
-    </div>
-
-    <!-- ALL -->
-    <div data-tab-pane="all" class="tab-pane active">
-      <div class="grid-2 reveal">
-
-        <!-- Clinical -->
-        <div class="case-card" id="clinical">
-          <div class="case-card-head">
-            <div class="case-label">Pharma &amp; Biotech</div>
-            <h3>Clinical trial statistical analysis</h3>
-            <div class="phase-track">
-              <div class="phase active">Phase I</div>
-              <span class="phase-arrow">→</span>
-              <div class="phase active">Phase II</div>
-              <span class="phase-arrow">→</span>
-              <div class="phase active">Phase III</div>
-              <span class="phase-arrow">→</span>
-              <div class="phase active">NDA/BLA</div>
-            </div>
-          </div>
-          <div class="case-card-body">
-            <p>Reproducible SAPs, locked environments at database freeze, automated audit trails for DSMB and regulatory review. Reprosia ensures your primary, secondary, and sensitivity analyses are reproducible from first draft to final submission.</p>
-            <div class="before-after">
-              <div class="ba-col ba-before">
-                <div class="ba-label">Before</div>
-                <ul>
-                  <li>Ad-hoc R scripts</li>
-                  <li>Manual version tracking</li>
-                  <li>Undocumented packages</li>
-                  <li>Audit failures at submission</li>
-                </ul>
-              </div>
-              <div class="ba-col ba-after">
-                <div class="ba-label">After</div>
-                <ul>
-                  <li>Certified R environment</li>
-                  <li>Automatic audit trail</li>
-                  <li>Locked package versions</li>
-                  <li>Submission-ready output</li>
-                </ul>
-              </div>
-            </div>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">21 CFR Part 11</span><span class="tag">ICH E9(R1)</span><span class="tag">DSMB</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Regulatory -->
-        <div class="case-card" id="regulatory">
-          <div class="case-card-head">
-            <div class="case-label">Regulatory Affairs</div>
-            <h3>Submission-ready R package validation</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Validate your R environment to FDA and EMA standards before submission. Generate complete IQ/OQ/PQ documentation automatically. Reduce the risk of submission audit failures from undocumented package dependencies or missing validation evidence.</p>
-            <ul class="feat-list">
-              <li>Automated IQ/OQ/PQ report generation</li>
-              <li>Package version provenance documentation</li>
-              <li>Electronic signatures for validation records</li>
-              <li>Pre-submission validation checklist</li>
-              <li>Regulatory reviewer-ready documentation format</li>
-            </ul>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">IQ/OQ/PQ</span><span class="tag">FDA</span><span class="tag">EMA</span><span class="tag">eCTD</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- CRO -->
-        <div class="case-card" id="cro">
-          <div class="case-card-head">
-            <div class="case-label">Contract Research Organisations</div>
-            <h3>Multi-sponsor reproducibility management</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Manage reproducibility and compliance across multiple sponsor environments and data governance frameworks. Deliver consistent, validated analyses regardless of client infrastructure, internal tooling, or regulatory jurisdiction.</p>
-            <ul class="feat-list">
-              <li>Sponsor-specific environment profiles</li>
-              <li>Cross-site validation harmonisation</li>
-              <li>Sponsor audit trail handover packages</li>
-              <li>Multi-environment drift detection</li>
-              <li>White-label documentation for sponsor submission</li>
-            </ul>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">Multi-sponsor</span><span class="tag">GCP</span><span class="tag">Cross-site</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Migration -->
-        <div class="case-card" id="migration">
-          <div class="case-card-head">
-            <div class="case-label">SAS → R Migration</div>
-            <h3>Regulated environment transition without compliance risk</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Migrate from SAS to R without losing compliance posture or regulatory confidence. Reprosia provides automated equivalence testing, parallel validation, and complete migration audit trails acceptable for agency review — supporting teams at every phase of the transition.</p>
-            <div class="before-after">
-              <div class="ba-col ba-before">
-                <div class="ba-label">SAS environment</div>
-                <ul>
-                  <li>Legacy PROC code</li>
-                  <li>Proprietary formats</li>
-                  <li>High licensing cost</li>
-                  <li>Limited reproducibility</li>
-                </ul>
-              </div>
-              <div class="ba-col ba-after">
-                <div class="ba-label">R with Reprosia</div>
-                <ul>
-                  <li>Open-source R</li>
-                  <li>Equivalence certified</li>
-                  <li>Full audit trail</li>
-                  <li>Agency-acceptable</li>
-                </ul>
-              </div>
-            </div>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">Equivalence testing</span><span class="tag">Migration audit</span><span class="tag">GxP</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Bayesian Analysis · FDA 2026</div>
-            <h3>Prior elicitation and regulatory justification</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Structured Bayesian prior elicitation, conflict diagnostics, and regulatory-ready prior justification reports. Aligned with the FDA 2026 draft guidance on Bayesian methods for drug and biological products.</p>
-            <ul class="feat-list">
-              <li>SHELF-style elicitation across 6 distribution families</li>
-              <li>Prior-data conflict diagnostics and sensitivity analysis</li>
-              <li>Submission-ready prior justification reports</li>
-            </ul>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">bayprior</span><span class="tag">FDA 2026</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- PHARMA -->
-    <div data-tab-pane="pharma" class="tab-pane">
-      <div class="grid-2 reveal">
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Phase I–IV</div>
-            <h3>Clinical trial statistical analysis</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Reproducible SAPs across all clinical trial phases. Locked environments at database freeze, automated DSMB audit trails, and NDA/BLA-ready submission packages.</p>
-            <ul class="feat-list">
-              <li>Statistical Analysis Plan implementation</li>
-              <li>Database lock environment snapshot</li>
-              <li>DSMB reporting with full audit trail</li>
-              <li>Sensitivity analysis reproducibility</li>
-            </ul>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Biomarker &amp; Translational</div>
-            <h3>Biomarker analysis reproducibility</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Ensure biomarker analyses supporting companion diagnostic development and patient selection strategies are reproducible, auditable, and defensible in regulatory review.</p>
-            <ul class="feat-list">
-              <li>Biomarker assay data provenance</li>
-              <li>Pre-specified analysis audit trail</li>
-              <li>Post-hoc analysis flagging</li>
-              <li>CDx regulatory package support</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REGULATORY -->
-    <div data-tab-pane="regulatory" class="tab-pane">
-      <div class="grid-2 reveal">
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Regulatory Affairs</div>
-            <h3>Pre-submission R validation</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Complete R environment validation before submission. IQ/OQ/PQ documentation, electronic records, and system validation evidence — automatically generated and ready for regulatory review.</p>
-            <ul class="feat-list">
-              <li>FDA 21 CFR Part 11 compliance evidence</li>
-              <li>EMA Annex 11 documentation</li>
-              <li>Computerised System Validation (CSV) support</li>
-              <li>Risk-based validation approach documentation</li>
-            </ul>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Submissions</div>
-            <h3>eCTD statistical output packaging</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Generate eCTD-ready statistical output packages from your R analyses. Module 5 outputs, define.xml, reviewer's guide — all with full traceability to source data and analysis code.</p>
-            <ul class="feat-list">
-              <li>CDISC SDTM and ADaM dataset generation</li>
-              <li>Define.xml and reviewer's guide production</li>
-              <li>Module 5 output table formatting</li>
-              <li>ISS/ISE dataset integration</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CRO -->
-    <div data-tab-pane="cro" class="tab-pane">
-      <div class="grid-2 reveal">
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">CRO Operations</div>
-            <h3>Multi-sponsor environment management</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Manage distinct validated R environments per sponsor. Reprosia isolates sponsor environments while providing central oversight of validation status and compliance posture.</p>
-            <ul class="feat-list">
-              <li>Sponsor-isolated validated environments</li>
-              <li>Central validation status dashboard</li>
-              <li>Sponsor-specific audit trail export</li>
-              <li>Contract-specific documentation branding</li>
-            </ul>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Multi-Centre Trials</div>
-            <h3>Cross-site reproducibility assurance</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Guarantee identical outputs from multiple statistical sites. Reprosia synchronises environments across sites and flags any deviation before it reaches the submission package.</p>
-            <ul class="feat-list">
-              <li>Cross-site environment synchronisation</li>
-              <li>Multi-site drift alerts</li>
-              <li>Independent verification workflow</li>
-              <li>Double-programming support</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MIGRATION -->
-    <div data-tab-pane="migration" class="tab-pane">
-      <div class="grid-2 reveal">
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">SAS → R</div>
-            <h3>Equivalence-certified migration</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Migrate SAS macros and PROC code to R with automated equivalence testing. Reprosia compares outputs numerically and documents any differences with regulatory-acceptable justification.</p>
-            <ul class="feat-list">
-              <li>Automated output comparison (numerical tolerance)</li>
-              <li>Difference documentation with justification</li>
-              <li>Migration audit trail for agency review</li>
-              <li>Risk-based validation scope definition</li>
-            </ul>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Team Transition</div>
-            <h3>Compliance-safe upskilling pathway</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Support your statistical programming team in transitioning to R without compromising compliance obligations. Reprosia provides guardrails, validation, and training integration throughout.</p>
-            <ul class="feat-list">
-              <li>Staged migration timeline support</li>
-              <li>Parallel SAS/R validation period</li>
-              <li>Compliance guardrails for R novices</li>
-              <li>Training integration and competency evidence</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BAYESIAN -->
-    <div data-tab-pane="bayesian" class="tab-pane">
-      <div class="grid-2 reveal">
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Bayesian Clinical Trials · FDA 2026</div>
-            <h3>Prior elicitation and regulatory justification</h3>
-          </div>
-          <div class="case-card-body">
-            <p>The FDA 2026 draft guidance on Bayesian statistical methods raises the bar for prior justification. Reprosia integrates bayprior to provide structured elicitation workflows, conflict diagnostics, and regulatory-ready prior justification reports directly in your submission package.</p>
-            <ul class="feat-list">
-              <li>SHELF-style quantile matching and moment matching across 6 distribution families</li>
-              <li>Prior-data conflict diagnostics (Box p-value, Bhattacharyya overlap, KL divergence)</li>
-              <li>Sensitivity analysis with tornado plots and influence heatmaps</li>
-              <li>Self-contained prior justification reports (HTML, PDF, Word) for regulatory submission</li>
-            </ul>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">FDA 2026 guidance</span><span class="tag">bayprior</span><span class="tag">ICH E9(R1)</span>
-            </div>
-          </div>
-        </div>
-        <div class="case-card">
-          <div class="case-card-head">
-            <div class="case-label">Adaptive &amp; Informative Designs</div>
-            <h3>Historical data borrowing with power priors</h3>
-          </div>
-          <div class="case-card-body">
-            <p>Leverage historical control data or prior trial evidence in your Bayesian design with principled, audit-ready methodology. Reprosia supports robust mixture priors, power priors, and sceptical priors — each with complete documentation for regulatory review.</p>
-            <ul class="feat-list">
-              <li>Calibrated power priors via Bayes Factor optimisation</li>
-              <li>Robust mixture priors (Schmidli et al.) for MAP borrowing</li>
-              <li>Sceptical priors for regulatory sensitivity analyses</li>
-              <li>Expert opinion pooling with Bhattacharyya agreement diagnostics</li>
-            </ul>
-            <div style="margin-top:1.25rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-              <span class="tag">Power prior</span><span class="tag">MAP prior</span><span class="tag">Adaptive design</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ─── WHO WE SERVE ─── -->
-<section class="section section-surface">
-  <div class="container">
-    <div class="eyebrow ruled">Who we serve</div>
-    <h2 class="display display-md" style="margin-bottom:3.5rem">Every role in the<br><em>regulated R ecosystem.</em></h2>
-    <div class="grid-3 reveal">
-      <div class="card">
-        <div class="card-icon">STAT</div>
-        <h3>Clinical Biostatisticians</h3>
-        <p>Focus on the science. Reprosia handles environment documentation, audit trails, and reproducibility so your team writes statistics, not validation SOPs.</p>
-      </div>
-      <div class="card reveal-d1">
-        <div class="card-icon">PROG</div>
-        <h3>Statistical Programmers</h3>
-        <p>Locked environments, certified packages, and automated validation reports. Ship analysis code you can stand behind at a regulatory inspection.</p>
-      </div>
-      <div class="card reveal-d2">
-        <div class="card-icon">REG</div>
-        <h3>Regulatory Affairs</h3>
-        <p>Complete IQ/OQ/PQ documentation generated automatically. Submission-ready evidence packages that satisfy FDA and EMA reviewer expectations.</p>
-      </div>
-      <div class="card reveal-d3">
-        <div class="card-icon">QA</div>
-        <h3>Quality Assurance</h3>
-        <p>Real-time compliance monitoring, audit trail access, and validation status dashboards. Catch issues before they reach the inspection.</p>
-      </div>
-      <div class="card reveal-d4">
-        <div class="card-icon">CTO</div>
-        <h3>R&amp;D Leadership</h3>
-        <p>Platform-level visibility into your statistical computing compliance posture. Reduce submission risk and accelerate approval timelines.</p>
-      </div>
-      <div class="card reveal-d5">
-        <div class="card-icon">IT</div>
-        <h3>R&amp;D IT / Validation</h3>
-        <p>Computerised system validation evidence generated automatically. Integrate Reprosia with existing GxP IT infrastructure and change control processes.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CONSULTING ─── -->
-<section class="section">
-  <div class="container">
-    <div class="eyebrow ruled">Consulting services</div>
-    <h2 class="display display-md" style="margin-bottom:1rem">Expert support for<br><em>regulated R environments.</em></h2>
-    <p style="font-size:1rem;color:var(--text-mid);max-width:520px;line-height:1.75;font-weight:300;margin-bottom:3.5rem">We work directly with pharma, biotech, and CRO teams to implement reproducible, compliant R infrastructure. Every engagement is hands-on, led by the founder.</p>
-    <div class="grid-3 reveal">
-      <div class="card card-accent"><div class="card-icon">01</div><h3>Regulatory R implementation</h3><p>End-to-end implementation of R in GxP environments. Validation strategy, SOPs, system validation, and ongoing compliance support.</p></div>
-      <div class="card card-accent reveal-d1"><div class="card-icon">02</div><h3>Reproducibility audits</h3><p>Independent audit of your R analysis pipeline. We identify reproducibility risks and compliance gaps, with a prioritised remediation roadmap.</p></div>
-      <div class="card card-accent reveal-d2"><div class="card-icon">03</div><h3>IQ/OQ/PQ validation</h3><p>Validation of R and R packages to pharmaceutical industry standards. Full qualification documentation acceptable for FDA and EMA review.</p></div>
-      <div class="card card-accent reveal-d3"><div class="card-icon">04</div><h3>Estimand specification</h3><p>ICH E9(R1) estimand strategy for your clinical trial programme — from protocol definition to SAP implementation.</p></div>
-      <div class="card card-accent reveal-d4"><div class="card-icon">05</div><h3>SAS 2192 R migration</h3><p>Structured migration from SAS to R in regulated environments. Equivalence testing, validation bridging, and compliance throughout.</p></div>
-      <div class="card card-accent reveal-d5"><div class="card-icon">06</div><h3>Bayesian trial support</h3><p>Prior elicitation, conflict diagnostics, and FDA 2026 Bayesian guidance implementation using the bayprior framework.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA ─── -->
-<div class="cta-strip">
-  <div class="cta-strip-glow"></div>
-  <div class="container" style="position:relative;z-index:2">
-    <div class="eyebrow" style="justify-content:center">Get started</div>
-    <h2 class="display display-md" style="text-align:center;margin-bottom:1rem">Tell us about<br><em>your use case.</em></h2>
-    <p class="lead" style="text-align:center">Every engagement starts with a conversation. We'll understand your environment and show you exactly how Reprosia fits.</p>
-    <div class="btn-group" style="justify-content:center">
-      <a href="contact.html" class="btn btn-teal">Start the conversation</a>
-      <a href="platform.html" class="btn btn-ghost">Explore the platform →</a>
-    </div>
-    <p class="cta-email">Or email us at <a href="mailto:team@reprosia.com">team@reprosia.com</a></p>
-  </div>
+<div class="wrap page-head">
+  <h1>Where the records get used.</h1>
+  <p class="lead">Five situations where a statistician, QA lead or regulatory reviewer needs evidence, and what produces it.</p>
 </div>
-
-<!-- ─── FOOTER ─── -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="index.html" class="nav-logo">Repro<span>sia</span></a>
-      <p>AI-native pharma R&amp;D platform built on open-source foundations.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Platform</h4>
-      <ul><li><a href="platform.html">Overview</a></li><li><a href="platform.html#validate">Validate</a></li><li><a href="platform.html#reproduce">Reproduce</a></li><li><a href="platform.html#submit">Submit</a></li></ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li>
-        <li><a href="use-cases.html">Use Cases</a></li><li><a href="contact.html">Contact</a></li><li><a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a></li></ul>
-    </div>
-    <div class="footer-col">
-      <h4>Resources</h4>
-      <ul><li><a href="https://github.com/reposia-hq" target="_blank" rel="noopener">GitHub</a></li><li><a href="https://reprostats.org" target="_blank" rel="noopener">ReproStats</a></li><li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li></ul>
+<section class="section">
+  <div class="wrap">
+<div class="case">
+  <div><h3>Reviewing AI-drafted analysis code</h3><p style="margin-top:10px"><span class="tag">In development</span></p></div>
+  <dl>
+    <dt>Who</dt><dd>Statistical programmers and QC reviewers.</dd>
+    <dt>The problem</dt><dd>A draft from an assistant is merged with no record of the prompt, the model or who approved it.</dd>
+    <dt>Evidence produced</dt><dd>A log entry chain holding the prompt, output, reviewer decision and data hash.</dd>
+  </dl>
+</div><div class="case">
+  <div><h3>Tracing populations through an analysis</h3><p style="margin-top:10px"><span class="tag tag-live">On CRAN</span></p></div>
+  <dl>
+    <dt>Who</dt><dd>Study statisticians.</dd>
+    <dt>The problem</dt><dd>The sample size changes between datasets and nobody can say exactly which rows were dropped, or why.</dd>
+    <dt>Evidence produced</dt><dd>A lineager provenance report listing every exclusion and its reason.</dd>
+  </dl>
+</div><div class="case">
+  <div><h3>Documenting a Bayesian prior</h3><p style="margin-top:10px"><span class="tag tag-live">On CRAN</span></p></div>
+  <dl>
+    <dt>Who</dt><dd>Trial statisticians and regulatory affairs.</dd>
+    <dt>The problem</dt><dd>An informative prior needs a recorded source, a check against the data, and a sensitivity analysis.</dd>
+    <dt>Evidence produced</dt><dd>A bayprior report covering elicitation, conflict diagnostics and sensitivity analysis.</dd>
+  </dl>
+</div><div class="case">
+  <div><h3>Qualifying an R environment</h3><p style="margin-top:10px"><span class="tag tag-live">On CRAN</span></p></div>
+  <dl>
+    <dt>Who</dt><dd>QA and IT validation teams.</dd>
+    <dt>The problem</dt><dd>You need evidence that a package is installed and behaves as specified.</dd>
+    <dt>Evidence produced</dt><dd>IQ/OQ/PQ scripts and results for regulog, with each operational test traced to a 21 CFR Part 11 or EU Annex 11 clause.</dd>
+  </dl>
+</div><div class="case">
+  <div><h3>Showing that SAS and R agree</h3><p style="margin-top:10px"><span class="tag tag-plan">Consulting</span></p></div>
+  <dl>
+    <dt>Who</dt><dd>Teams moving programmes from SAS to R.</dd>
+    <dt>The problem</dt><dd>Reviewers want proof that migrated outputs match the originals.</dd>
+    <dt>Evidence produced</dt><dd>Side-by-side comparison documentation and a migration audit trail.</dd>
+  </dl>
+</div>
+  </div>
+</section>
+<section class="section cta">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:0">
+      <h2>Have a case that is not listed?</h2>
+      <div class="actions"><a class="btn" href="contact.html">Describe it</a></div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Reprosia · Brussels, Belgium</span>
-    <span class="footer-copy">reprosia.com</span>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+        <p style="margin-top:12px">An audit layer for AI-assisted analysis in regulated R. Built on open-source packages.</p>
+      </div>
+      <div>
+        <h3>Site</h3>
+        <ul>
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="approach.html">Approach</a></li>
+          <li><a href="use-cases.html">Use cases</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source packages</a></li>
+          <li><a href="https://github.com/reprosia-hq" rel="noopener">GitHub organisation</a></li>
+          <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclaimer">Reprosia is an independent, early-stage project. No customers, certifications or regulatory endorsements are claimed. Software described here is designed around 21 CFR Part 11 and EU Annex 11; using it does not by itself make an organisation compliant. Validation and quality-system responsibilities stay with the regulated organisation. &copy; <span id="year">2026</span> Reprosia.</p>
   </div>
 </footer>
-
-<script src="main.js"></script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

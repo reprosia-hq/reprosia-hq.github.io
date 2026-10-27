@@ -1,540 +1,164 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Platform — Reprosia</title>
-  <meta name="description" content="The Reprosia platform: validate, reproduce, submit. AI-native infrastructure for pharmaceutical R&D.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* ── Architecture diagram ── */
-    .arch-diagram {
-      margin: 3rem 0;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr;
-      gap: 0;
-      align-items: center;
-    }
-    .arch-node {
-      padding: 1.75rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface-2);
-      text-align: center;
-      transition: border-color 0.3s;
-    }
-    .arch-node:hover { border-color: var(--border-teal); }
-    .arch-node-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--teal);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 0.625rem;
-    }
-    .arch-node-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1875rem;
-      font-weight: 400;
-      color: var(--text);
-    }
-    .arch-node p {
-      font-size: 0.78rem;
-      color: var(--text-mid);
-      line-height: 1.6;
-      margin-top: 0.5rem;
-    }
-    .arch-arrow {
-      text-align: center;
-      color: var(--teal);
-      font-size: 1.5rem;
-      padding: 0 0.5rem;
-      opacity: 0.5;
-    }
-
-    /* ── Pillar sections ── */
-    .pillar-section {
-      padding: 5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .pillar-section:last-child { border-bottom: none; }
-    .pillar-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .pillar-num {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--teal);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .pillar-visual {
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      line-height: 1.8;
-      color: var(--text-mid);
-    }
-    .pv-green  { color: #28c840; }
-    .pv-blue   { color: #79b8ff; }
-    .pv-teal   { color: var(--teal); }
-    .pv-yellow { color: #febc2e; }
-    .pv-label  { color: var(--text-soft); }
-
-    /* ── Spec table ── */
-    .spec-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.5rem;
-    }
-    .spec-table th {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--teal);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border-mid);
-    }
-    .spec-table td {
-      padding: 0.875rem 1rem;
-      font-size: 0.875rem;
-      color: var(--text-mid);
-      border-bottom: 1px solid var(--border);
-    }
-    .spec-table tr:last-child td { border-bottom: none; }
-    .spec-table td:first-child {
-      color: var(--text);
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    /* ── Integration strip ── */
-    .integration-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-      margin-top: 3rem;
-    }
-    .int-card {
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface);
-      text-align: center;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    .int-card:hover { border-color: var(--border-teal); transform: translateY(-3px); }
-    .int-icon {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--teal);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.625rem;
-    }
-    .int-name {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.375rem;
-    }
-    .int-desc { font-size: 0.78rem; color: var(--text-mid); line-height: 1.55; }
-
-    @media (max-width: 900px) {
-      .arch-diagram { grid-template-columns: 1fr; }
-      .arch-arrow { transform: rotate(90deg); }
-      .pillar-layout { grid-template-columns: 1fr; gap: 2rem; }
-      .integration-grid { grid-template-columns: repeat(2,1fr); }
-    }
-    @media (max-width: 640px) {
-      .integration-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform | Reprosia</title>
+<meta name="description" content="How Reprosia sits between your R environment and your quality system: hash-chained logs, provenance, reproducibility checks and an audited AI assist in development.">
+<link rel="canonical" href="https://reprosia.com/platform.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F2F3F0">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Reprosia">
+<meta property="og:title" content="Platform | Reprosia">
+<meta property="og:description" content="How Reprosia sits between your R environment and your quality system: hash-chained logs, provenance, reproducibility checks and an audited AI assist in development.">
+<meta property="og:url" content="https://reprosia.com/platform.html">
+<meta property="og:image" content="https://reprosia.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<!-- ─── NAV ─── -->
-<nav class="nav">
-  <a href="index.html" class="nav-logo">Repro<span>sia</span></a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="platform.html" class="active">Platform</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="use-cases.html">Use Cases</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="theme-toggle" aria-label="Toggle theme">
-      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-    <a href="contact.html" class="btn btn-teal btn-sm">Request access</a>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+    <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a class="nav-link" href="platform.html" aria-current="page">Platform</a><a class="nav-link" href="approach.html">Approach</a><a class="nav-link" href="use-cases.html">Use cases</a><a class="nav-link" href="services.html">Services</a><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <button class="icon-btn" id="theme-toggle" type="button">Dark theme</button>
+    </nav>
   </div>
-  <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-</nav>
-<nav class="nav-drawer">
-  <a href="index.html">Home</a>
-  <a href="platform.html"  class="active">Platform</a>
-  <a href="services.html">Services</a>
-  <a href="use-cases.html">Use Cases</a>
-  <a href="about.html">About</a>
-  <a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a>
-  <a href="contact.html" class="btn btn-teal btn-sm nav-cta-mobile">Request access</a>
-</nav>
+</header>
+<main id="main">
 
-<!-- ─── PAGE HERO ─── -->
-<section class="page-hero">
-  <div class="page-hero-bg"></div>
-  <div class="page-hero-inner">
-    <div class="eyebrow ruled">The platform</div>
-    <h1 class="display display-lg">The infrastructure layer<br>pharma R&amp;D has been <em>missing.</em></h1>
-    <p class="lead">Reprosia is not a reporting tool. It is the AI-native foundation that makes pharmaceutical analyses trustworthy, reproducible, and submission-ready by design.</p>
-    <div class="btn-group">
-      <a href="contact.html" class="btn btn-teal">Request early access</a>
-      <a href="#architecture" class="btn btn-ghost">Explore architecture</a>
-    </div>
-  </div>
-</section>
-
-<!-- ─── ARCHITECTURE ─── -->
-<section class="section" id="architecture">
-  <div class="container">
-    <div class="eyebrow ruled">Architecture</div>
-    <h2 class="display display-md" style="margin-bottom:0.875rem">How the platform<br><em>fits together.</em></h2>
-    <p style="font-size:1rem;color:var(--text-mid);max-width:520px;line-height:1.75;font-weight:300">Three layers: your existing R environment, the Reprosia AI audit engine, and regulatory-ready output. No migration required.</p>
-    <div class="arch-diagram reveal">
-      <div class="arch-node">
-        <div class="arch-node-label">Layer 1</div>
-        <div class="arch-node-title">Your R Environment</div>
-        <p>Existing scripts, packages, data pipelines. RStudio, Posit, CI/CD. No change required.</p>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node">
-        <div class="arch-node-label">Layer 2</div>
-        <div class="arch-node-title">Reprosia AI Engine</div>
-        <p>Audit, validate, lock, certify. AI-powered compliance scanning and environment management.</p>
-      </div>
-      <div class="arch-arrow">→</div>
-      <div class="arch-node">
-        <div class="arch-node-label">Layer 3</div>
-        <div class="arch-node-title">Regulatory Output</div>
-        <p>eCTD-ready packages, IQ/OQ/PQ docs, CDISC outputs, estimand documentation.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── THREE PILLARS ─── -->
-<section class="section section-surface">
-  <div class="container">
-    <div class="eyebrow ruled">Platform pillars</div>
-    <h2 class="display display-md" style="margin-bottom:3.5rem">Three pillars of<br><em>analytical integrity.</em></h2>
-
-    <!-- VALIDATE -->
-    <div class="pillar-section" id="validate">
-      <div class="pillar-layout reveal">
-        <div>
-          <div class="pillar-num">01 — Validate</div>
-          <h3 class="display display-sm" style="margin-bottom:1rem">Your environment,<br><em>certified.</em></h3>
-          <p style="font-size:0.9375rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.5rem">AI-assisted IQ/OQ/PQ validation of your R environment and packages. Every function call, parameter, and result documented automatically with cryptographic audit trails compliant with 21 CFR Part 11 and GxP requirements.</p>
-          <ul class="feat-list" style="font-size:0.9rem">
-            <li>Installation Qualification (IQ) — system and package verification</li>
-            <li>Operational Qualification (OQ) — function behaviour testing</li>
-            <li>Performance Qualification (PQ) — end-to-end workflow validation</li>
-            <li>Tamper-evident audit trail with digital signatures</li>
-            <li>User-attributed action logging with timestamps</li>
-            <li>Automated validation report generation for agency review</li>
-          </ul>
-          <div style="margin-top:1.5rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-            <span class="tag">21 CFR Part 11</span>
-            <span class="tag">GxP</span>
-            <span class="tag">IQ/OQ/PQ</span>
-            <span class="tag">reproducr</span>
-            <span class="tag">regulog</span>
-          </div>
-        </div>
-        <div class="pillar-visual">
-          <div><span class="pv-label"># Audit script for behavioural risks</span></div>
-          <div style="margin-top:0.5rem"><span class="pv-blue">library</span>(reproducr)</div>
-          <div style="margin-top:0.75rem">report &lt;- <span class="pv-blue">audit_script</span>(<span class="pv-teal">"analysis.R"</span>)</div>
-          <div style="margin-top:0.5rem"><span class="pv-label">  Files scanned:   1</span></div>
-          <div><span class="pv-label">  Calls detected:  23</span></div>
-          <div style="margin-top:0.75rem">risks &lt;- <span class="pv-blue">risk_score</span>(report)</div>
-          <div style="margin-top:0.5rem"><span class="pv-label">  HIGH: 0  MEDIUM: 1  LOW: 2</span></div>
-          <div style="margin-top:0.75rem"><span class="pv-label"># Certify outputs and detect drift</span></div>
-          <div><span class="pv-blue">certify</span>(outputs=list(coefs=coef(model)), tag=<span class="pv-teal">"v1"</span>)</div>
-          <div style="margin-top:0.5rem"><span class="pv-green">✓</span> certified 3 output(s) under tag 'v1'</div>
-          <div style="margin-top:0.75rem"><span class="pv-blue">check_drift</span>(outputs=list(coefs=coef(model)), against=<span class="pv-teal">"v1"</span>)</div>
-          <div style="margin-top:0.5rem"><span class="pv-green">✓</span> Verdict: ALL OUTPUTS MATCH</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REPRODUCE -->
-    <div class="pillar-section" id="reproduce">
-      <div class="pillar-layout reveal">
-        <div>
-          <div class="pillar-num">02 — Reproduce</div>
-          <h3 class="display display-sm" style="margin-bottom:1rem">Results that<br><em>don't drift.</em></h3>
-          <p style="font-size:0.9375rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.5rem">Consistent reproducibility across environments, teams, and time. Locked package versions, containerised execution, and continuous drift monitoring ensure your analysis at database lock is traceable and verifiable at submission.</p>
-          <ul class="feat-list" style="font-size:0.9rem">
-            <li>Environment snapshots and lockfiles at any analysis stage</li>
-            <li>Continuous drift detection — alerts on any environmental change</li>
-            <li>Cross-site reproducibility for multi-centre trials</li>
-            <li>Hash-verified script and data integrity</li>
-            <li>Containerised execution for submission reproducibility</li>
-            <li>Historical replay — re-run any analysis from any point in time</li>
-          </ul>
-          <div style="margin-top:1.5rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-            <span class="tag">Environment lock</span>
-            <span class="tag">Drift detection</span>
-            <span class="tag">lineager</span>
-            <span class="tag">reproducr</span>
-          </div>
-        </div>
-        <div class="pillar-visual">
-          <div><span class="pv-label"># Certify outputs at database lock</span></div>
-          <div style="margin-top:0.5rem"><span class="pv-blue">certify</span>(</div>
-          <div style="padding-left:1.25rem">outputs = list(</div>
-          <div style="padding-left:2.5rem">coefs     = coef(model),</div>
-          <div style="padding-left:2.5rem">r_squared = summary(model)$r.squared</div>
-          <div style="padding-left:1.25rem">),</div>
-          <div style="padding-left:1.25rem">tag    = <span class="pv-teal">"DBL"</span>,</div>
-          <div style="padding-left:1.25rem">script = <span class="pv-teal">"analysis.R"</span></div>
-          <div>)</div>
-          <div style="margin-top:0.5rem"><span class="pv-green">✓</span> certified 2 output(s) under tag 'DBL'</div>
-          <div style="margin-top:0.75rem"><span class="pv-label"># At submission — check for drift</span></div>
-          <div><span class="pv-blue">check_drift</span>(</div>
-          <div style="padding-left:1.25rem">outputs = list(coefs = coef(model), r_squared = summary(model)$r.squared),</div>
-          <div style="padding-left:1.25rem">against = <span class="pv-teal">"DBL"</span></div>
-          <div>)</div>
-          <div style="margin-top:0.5rem"><span class="pv-green">✓</span> Verdict: ALL OUTPUTS MATCH</div>
-          <div><span class="pv-green">✓</span> OK: 2  Drifted: 0</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="pillar-section" id="submit">
-      <div class="pillar-layout reveal">
-        <div>
-          <div class="pillar-num">03 — Submit</div>
-          <h3 class="display display-sm" style="margin-bottom:1rem">Submission packages<br><em>built to pass.</em></h3>
-          <p style="font-size:0.9375rem;color:var(--text-mid);line-height:1.8;margin-bottom:1.5rem">Regulatory-ready outputs for FDA and EMA submissions. CDISC-compatible data structures, ICH E9(R1) estimand documentation, and pre-built eCTD templates — generated directly from your existing R analysis pipeline, with full traceability back to source data.</p>
-          <ul class="feat-list" style="font-size:0.9rem">
-            <li>SDTM and ADaM compatible output generation</li>
-            <li>ICH E9(R1) estimand specification documentation</li>
-            <li>eCTD-ready submission package assembly</li>
-            <li>Define.xml and reviewer's guide generation</li>
-            <li>Full lineage from raw data to submission dataset</li>
-            <li>FDA and EMA reviewer-friendly output formats</li>
-          </ul>
-          <div style="margin-top:1.5rem;display:flex;gap:0.5rem;flex-wrap:wrap">
-            <span class="tag">CDISC</span>
-            <span class="tag">ICH E9(R1)</span>
-            <span class="tag">eCTD</span>
-            <span class="tag">estimandr</span>
-            <span class="tag">bayprior</span>
-          </div>
-        </div>
-        <div class="pillar-visual">
-          <div><span class="pv-label"># Define estimand (ICH E9R1)</span></div>
-          <div style="margin-top:0.5rem"><span class="pv-blue">library</span>(estimandr)</div>
-          <div style="margin-top:0.5rem"><span class="pv-blue">define_estimand</span>(</div>
-          <div style="padding-left:1.25rem">population = <span class="pv-teal">"ITT"</span>,</div>
-          <div style="padding-left:1.25rem">variable    = <span class="pv-teal">"HbA1c change"</span>,</div>
-          <div style="padding-left:1.25rem">ice_strategy= <span class="pv-teal">"hypothetical"</span>,</div>
-          <div style="padding-left:1.25rem">summary     = <span class="pv-teal">"mean difference"</span></div>
-          <div>)</div>
-          <div style="margin-top:0.75rem"><span class="pv-blue">certify</span>(<span class="pv-teal">"submission"</span>)</div>
-          <div style="margin-top:0.5rem"><span class="pv-green">✓</span> eCTD package: ready</div>
-          <div><span class="pv-green">✓</span> CDISC validation: passed</div>
-          <div><span class="pv-green">✓</span> Define.xml: generated</div>
-          <div><span class="pv-teal">→</span> Submission ready for FDA</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── WORKFLOW ─── -->
-<section class="section">
-  <div class="container">
-    <div class="eyebrow ruled">Workflow</div>
-    <h2 class="display display-md" style="margin-bottom:3.5rem">From first line of R to<br><em>approved submission.</em></h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 4rem" class="reveal">
-      <div>
-        <div class="step-row">
-          <div class="step-num">01</div>
-          <div class="step-content">
-            <h3>Connect your environment</h3>
-            <p>Integrates with existing R workflows in minutes. Works alongside RStudio, Posit Workbench, and CI/CD pipelines. No migration required.</p>
-            <span class="tag">reproducr</span> <span class="tag">regulog</span>
-          </div>
-        </div>
-        <div class="step-row">
-          <div class="step-num">02</div>
-          <div class="step-content">
-            <h3>AI audits your pipeline</h3>
-            <p>Automatic scanning for reproducibility risks, undocumented dependencies, environment drift, and compliance gaps — before they become submission failures.</p>
-            <span class="tag">lineager</span> <span class="tag">estimandr</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="step-row">
-          <div class="step-num">03</div>
-          <div class="step-content">
-            <h3>Lock, certify, document</h3>
-            <p>Freeze your environment at database lock. Generate automated IQ/OQ/PQ validation documentation and full audit reports ready for agency review.</p>
-            <span class="tag">IQ / OQ / PQ</span>
-          </div>
-        </div>
-        <div class="step-row" style="border-bottom:none">
-          <div class="step-num">04</div>
-          <div class="step-content">
-            <h3>Package and submit</h3>
-            <p>One command to generate your eCTD-compatible submission package. Full audit trail, reproducibility proof, and regulatory documentation included.</p>
-            <span class="tag">FDA</span> <span class="tag">EMA</span> <span class="tag">ICH</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── INTEGRATIONS ─── -->
-<section class="section section-surface">
-  <div class="container">
-    <div class="eyebrow ruled">Integrations</div>
-    <h2 class="display display-md" style="margin-bottom:1rem">Works with your<br><em>existing stack.</em></h2>
-    <p style="font-size:1rem;color:var(--text-mid);max-width:480px;line-height:1.75;font-weight:300">Reprosia wraps around your existing R infrastructure. No rip and replace.</p>
-    <div class="integration-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
-      <div class="int-card">
-        <div class="int-icon">R</div>
-        <div class="int-name">Base R &amp; Tidyverse</div>
-        <div class="int-desc">Full support for R 4.x and all tidyverse packages</div>
-      </div>
-      <div class="int-card">
-        <div class="int-icon">IDE</div>
-        <div class="int-name">RStudio / Posit</div>
-        <div class="int-desc">Native RStudio add-in and Posit Workbench integration</div>
-      </div>
-      <div class="int-card">
-        <div class="int-icon">CI</div>
-        <div class="int-name">GitHub Actions</div>
-        <div class="int-desc">Automated validation in CI/CD pipelines</div>
-      </div>
-      <div class="int-card">
-        <div class="int-icon">SAS</div>
-        <div class="int-name">SAS Bridging</div>
-        <div class="int-desc">Equivalence testing for SAS to R migration</div>
-      </div>
-      <div class="int-card">
-        <div class="int-icon">BAY</div>
-        <div class="int-name">bayprior</div>
-        <div class="int-desc">Bayesian prior elicitation and regulatory reporting — FDA 2026 aligned</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── COMPLIANCE TABLE ─── -->
-<section class="section">
-  <div class="container">
-    <div class="eyebrow ruled">Compliance coverage</div>
-    <h2 class="display display-md" style="margin-bottom:0.875rem">Every requirement,<br><em>covered.</em></h2>
-    <p style="font-size:1rem;color:var(--text-mid);max-width:480px;line-height:1.75;font-weight:300;margin-bottom:2rem">Built against real regulatory requirements from the ground up.</p>
-    <table class="spec-table reveal">
-      <thead>
-        <tr>
-          <th>Standard</th>
-          <th>Coverage</th>
-          <th>Feature</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>21 CFR Part 11</td><td>Full</td><td>Electronic records, audit trail, digital signatures, access controls</td></tr>
-        <tr><td>ICH E9(R1)</td><td>Full</td><td>Estimand specification, intercurrent event strategies, SAP documentation</td></tr>
-        <tr><td>GCP / GLP</td><td>Full</td><td>Good Practice workflow integration, validation SOPs, change control</td></tr>
-        <tr><td>CDISC SDTM</td><td>Full</td><td>Study data tabulation model output, define.xml, reviewer's guide</td></tr>
-        <tr><td>CDISC ADaM</td><td>Full</td><td>Analysis dataset model, ADSL, ADAE, ADTTE derivation tracking</td></tr>
-        <tr><td>eCTD</td><td>Full</td><td>Module 5 statistical output packaging, bookmarking, hyperlinking</td></tr>
-        <tr><td>EMA Guidelines</td><td>Full</td><td>CHMP statistical guidelines, conditional approval requirements</td></tr>
-        <tr><td>GDPR</td><td>Committed</td><td>EU-based operation, privacy-by-design approach, data subject rights on request</td></tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ─── CTA ─── -->
-<div class="cta-strip section-alt">
-  <div class="cta-strip-glow"></div>
-  <div class="container" style="position:relative;z-index:2">
-    <div class="eyebrow" style="justify-content:center">Early access</div>
-    <h2 class="display display-md" style="text-align:center;margin-bottom:1rem">Ready to see Reprosia<br><em>in your environment?</em></h2>
-    <p class="lead" style="text-align:center">We work directly with pharma and biotech teams. Request early access and we'll be in touch within 48 hours.</p>
-    <div class="btn-group" style="justify-content:center">
-      <a href="contact.html" class="btn btn-teal">Request early access</a>
-      <a href="use-cases.html" class="btn btn-ghost">See use cases →</a>
-    </div>
-    <p class="cta-email">Or reach us at <a href="mailto:team@reprosia.com">team@reprosia.com</a></p>
-  </div>
+<div class="wrap page-head">
+  <h1>An evidence layer between your R work and your quality system.</h1>
+  <p class="lead">Reprosia does not replace your analysis environment or your validation process. It adds the records they need to stand up to review, including when an AI assistant was involved.</p>
 </div>
 
-<!-- ─── FOOTER ─── -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="index.html" class="nav-logo">Repro<span>sia</span></a>
-      <p>AI-native pharma R&amp;D platform built on open-source foundations.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Platform</h4>
-      <ul>
-        <li><a href="platform.html">Overview</a></li>
-        <li><a href="platform.html#validate">Validate</a></li>
-        <li><a href="platform.html#reproduce">Reproduce</a></li>
-        <li><a href="platform.html#submit">Submit</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="use-cases.html">Use Cases</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="https://reprostats.org" target="_blank" rel="noopener">Open Source ↗</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Resources</h4>
-      <ul>
-        <li><a href="https://github.com/reposia-hq" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://reprostats.org" target="_blank" rel="noopener">ReproStats</a></li>
-        <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
-      </ul>
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><h2>Where it sits.</h2><p>The packages are ordinary R packages, so they fit wherever you already run R.</p></div>
+    <div class="layers">
+      <div class="layer">
+        <h3>Your R environment</h3>
+        <ul>
+          <li>Analysis scripts and packages</li>
+          <li>RStudio or Posit Workbench</li>
+          <li>Git and CI</li>
+          <li>The AI assistant you choose</li>
+        </ul>
+      </div>
+      <div class="layer layer-mid">
+        <h3>Evidence layer</h3>
+        <ul>
+          <li><strong>regulog</strong> records actions in a tamper-evident log</li>
+          <li><strong>lineager</strong> traces rows and exclusions</li>
+          <li><strong>reproducr</strong> locks and checks the environment</li>
+          <li><strong>bayprior</strong> documents Bayesian priors</li>
+        </ul>
+      </div>
+      <div class="layer">
+        <h3>What QA and reviewers receive</h3>
+        <ul>
+          <li>Audit log extracts that can be verified</li>
+          <li>Provenance reports</li>
+          <li>Qualification scripts and results</li>
+          <li>Reproducibility checks and drift reports</li>
+          <li>Prior elicitation reports</li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Reprosia · Brussels, Belgium</span>
-    <span class="footer-copy">reprosia.com</span>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Audited AI assist <span class="tag" style="vertical-align:middle;margin-left:8px">In development</span></h2>
+      <p>The next layer captures the AI step itself. The design below is a sketch of the intended workflow, not released software.</p>
+    </div>
+    <div class="split">
+      <ol class="steps">
+        <li class="step"><div><h3>Scope the task</h3><p>Write down the context of use: what the assistant may do and what it may not.</p></div></li>
+        <li class="step"><div><h3>Capture the draft</h3><p>Log the prompt, the model and its version, and the output it returned.</p></div></li>
+        <li class="step"><div><h3>Record the review</h3><p>A named reviewer accepts, edits or rejects the output. The decision joins the same chain.</p></div></li>
+        <li class="step"><div><h3>Fix the data</h3><p>Hash the input datasets and exclusions so the run points at an exact data version.</p></div></li>
+        <li class="step"><div><h3>Replay</h3><p>Re-run in the locked environment and compare outputs to the logged result.</p></div></li>
+      </ol>
+      <div>
+        <p class="code-label">Design sketch. Function names are illustrative and the API is not final.</p>
+<pre class="code"><code># Not released. Illustrates the intended shape.
+session &lt;- ai_session(
+  task  = "Derive change from baseline for ADLB",
+  data  = adlb,
+  log   = regulog_path
+)
+draft  &lt;- ai_draft(session, model = my_model)
+review &lt;- ai_review(draft, reviewer = "jsmith",
+                    decision = "accept")
+ai_replay(session)  # locked environment, recorded seed</code></pre>
+        <p class="small muted" style="margin-top:12px">You choose the model. Reprosia does not ship one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><h2>What it is not.</h2><p>Stating the limits plainly is part of the product.</p></div>
+    <dl class="defs">
+      <div><dt>Not a validated system out of the box</dt><dd>Your own computer system validation still applies. regulog ships qualification scripts to support it, and the results belong to your installation.</dd></div>
+      <div><dt>Not a compliance certificate</dt><dd>The software is designed around 21 CFR Part 11 and EU Annex 11. Whether a deployment is compliant depends on how it is configured, governed and validated.</dd></div>
+      <div><dt>Not submission assembly</dt><dd>Reprosia does not build eCTD packages or generate Define-XML. lineager produces provenance reports that can support a Reviewer's Guide.</dd></div>
+      <div><dt>Not an AI model</dt><dd>It records and verifies what happened around a model you select. It does not judge whether the model is right.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section cta">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom:0">
+      <h2>See where it fits in your workflow.</h2>
+      <div class="actions"><a class="btn" href="contact.html">Request early access</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+        <p style="margin-top:12px">An audit layer for AI-assisted analysis in regulated R. Built on open-source packages.</p>
+      </div>
+      <div>
+        <h3>Site</h3>
+        <ul>
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="approach.html">Approach</a></li>
+          <li><a href="use-cases.html">Use cases</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source packages</a></li>
+          <li><a href="https://github.com/reprosia-hq" rel="noopener">GitHub organisation</a></li>
+          <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclaimer">Reprosia is an independent, early-stage project. No customers, certifications or regulatory endorsements are claimed. Software described here is designed around 21 CFR Part 11 and EU Annex 11; using it does not by itself make an organisation compliant. Validation and quality-system responsibilities stay with the regulated organisation. &copy; <span id="year">2026</span> Reprosia.</p>
   </div>
 </footer>
-
-<script src="main.js"></script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>
