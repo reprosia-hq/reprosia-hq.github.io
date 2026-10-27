@@ -360,8 +360,8 @@
     b.addEventListener("click", function () { $("s-input").value = s; run(s); });
     chips.appendChild(b);
   });
-  function run(q) {
-    var out = $("s-results"); out.innerHTML = "";
+  function run(q, keep) {
+    var out = $("s-results"); if (!keep) out.innerHTML = "";
     q = q.trim(); if (!q) return;
     var r = search(q);
     if (!r.length) {
@@ -378,4 +378,45 @@
     });
   }
   $("s-form").addEventListener("submit", function (e) { e.preventDefault(); run($("s-input").value); });
+
+  /* ---------------- Optional AI assistant (off unless RP_ASSISTANT_URL is set) ---------------- */
+  var AI_URL = (window.RP_ASSISTANT_URL || "").replace(/\/+$/, "");
+  if (AI_URL) {
+    var form = $("s-form");
+    var aiBtn = el("button", "btn btn-ghost", "Ask the AI assistant (beta)");
+    aiBtn.type = "button"; aiBtn.id = "s-ai";
+    form.appendChild(aiBtn);
+    var note = el("p", "note", "The assistant sends your question to a language model through a Reprosia proxy and answers only from this site's notes. Do not enter confidential or personal data. Answers can be wrong; this is not regulatory advice. Nothing is stored by Reprosia.");
+    form.parentNode.insertBefore(note, $("s-chips"));
+    aiBtn.addEventListener("click", function () {
+      var q = $("s-input").value.trim();
+      if (!q) { $("s-input").focus(); return; }
+      var out = $("s-results"); out.innerHTML = "";
+      var card = el("div", "result"); card.appendChild(el("h4", null, "Thinking…")); out.appendChild(card);
+      aiBtn.disabled = true;
+      var ctl = new AbortController(); var to = setTimeout(function () { ctl.abort(); }, 25000);
+      fetch(AI_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }), signal: ctl.signal })
+        .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+        .then(function (x) {
+          out.innerHTML = "";
+          var c = el("div", "result");
+          if (!x.ok || !x.d.answer) {
+            c.appendChild(el("h4", null, "The assistant could not answer"));
+            c.appendChild(el("p", null, (x.d && x.d.error) || "Something went wrong. The keyword search below still works."));
+            out.appendChild(c); run(q, true); return;
+          }
+          c.appendChild(el("h4", null, q));
+          var p = el("p", null, x.d.answer); p.style.whiteSpace = "pre-wrap"; c.appendChild(p);
+          var meta = el("div", "meta"); meta.appendChild(el("span", "tag", "AI answer, beta")); c.appendChild(meta);
+          out.appendChild(c);
+          var head = el("p", "note", "Closest written answers from the site:"); out.appendChild(head); run(q, true);
+        })
+        .catch(function () {
+          out.innerHTML = "";
+          var c = el("div", "result"); c.appendChild(el("h4", null, "The assistant is unavailable"));
+          c.appendChild(el("p", null, "The keyword search still works. Showing its closest matches.")); out.appendChild(c); run(q, true);
+        })
+        .then(function () { clearTimeout(to); aiBtn.disabled = false; });
+    });
+  }
 })();

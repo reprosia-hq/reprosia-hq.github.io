@@ -5,11 +5,13 @@
   var RP = (window.RP = {});
   RP.reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-  /* Theme: light by default; the visitor can switch to dark and the choice is remembered. */
+  /* Theme: follows the visitor's system setting until they pick one with the toggle; the pick is remembered. */
   try {
     var saved = localStorage.getItem("reprosia-theme");
     if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
   } catch (e) { /* storage blocked */ }
+  var hasChoice = false;
+  try { var s2 = localStorage.getItem("reprosia-theme"); hasChoice = (s2 === "light" || s2 === "dark"); } catch (e) { /* ignore */ }
   var themeBtn = document.getElementById("theme-toggle");
   function isDark() {
     var t = root.getAttribute("data-theme");
@@ -27,11 +29,24 @@
     themeBtn.addEventListener("click", function () {
       var next = isDark() ? "light" : "dark";
       root.setAttribute("data-theme", next);
+      hasChoice = true;
       try { localStorage.setItem("reprosia-theme", next); } catch (e) { /* ignore */ }
       syncThemeBtn();
       if (RP.recolor) RP.recolor();
     });
     syncThemeBtn();
+  }
+
+  /* Follow the system setting live, unless the visitor has chosen a theme */
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onSys = function (e) {
+      if (hasChoice) return;
+      root.setAttribute("data-theme", e.matches ? "dark" : "light");
+      syncThemeBtn();
+      if (RP.recolor) RP.recolor();
+    };
+    if (mq.addEventListener) mq.addEventListener("change", onSys); else if (mq.addListener) mq.addListener(onSys);
   }
 
   /* Dropdown menus: click to open, Esc or outside click to close */
