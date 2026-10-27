@@ -16,7 +16,13 @@
     if (t) return t === "dark";
     return false; /* light unless the visitor chose dark */
   }
-  function syncThemeBtn() { if (themeBtn) themeBtn.textContent = isDark() ? "Light theme" : "Dark theme"; }
+  function syncThemeBtn() {
+    if (!themeBtn) return;
+    var d = isDark();
+    themeBtn.setAttribute("aria-pressed", d ? "true" : "false");
+    themeBtn.setAttribute("aria-label", d ? "Switch to light theme" : "Switch to dark theme");
+    themeBtn.title = d ? "Switch to light theme" : "Switch to dark theme";
+  }
   if (themeBtn) {
     themeBtn.addEventListener("click", function () {
       var next = isDark() ? "light" : "dark";
