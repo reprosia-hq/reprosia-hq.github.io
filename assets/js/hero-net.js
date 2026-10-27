@@ -10,7 +10,7 @@
   }
   var net = window.ReproNet(cv, Object.assign({
     shape: "diamond", dash: true, twinkle: false, alpha: 0.45, size: 1.6, dist: 160,
-    anchors: [[0.55, 0.14, "regulog"], [0.88, 0.10, "lineager"], [0.88, 0.88, "reproducr"], [0.56, 0.92, "bayprior"]]
+    anchors: [[0.55, 0.14, "advisory"], [0.88, 0.10, "validation"], [0.88, 0.88, "migration"], [0.56, 0.92, "open-source tools"]]
   }, cols()));
   window.RP = window.RP || {};
   window.RP.recolor = function () { net.set(cols()); };

@@ -28,6 +28,30 @@
     syncThemeBtn();
   }
 
+  /* Dropdown menus: click to open, Esc or outside click to close */
+  var dds = document.querySelectorAll(".dd");
+  function closeDds(except) {
+    dds.forEach(function (d) {
+      if (d === except) return;
+      d.classList.remove("is-open");
+      var b = d.querySelector(".dd-btn"); if (b) b.setAttribute("aria-expanded", "false");
+    });
+  }
+  dds.forEach(function (d) {
+    var b = d.querySelector(".dd-btn");
+    b.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = !d.classList.contains("is-open");
+      closeDds(d);
+      d.classList.toggle("is-open", open);
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
+  document.addEventListener("click", function () { closeDds(null); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { var o = document.querySelector(".dd.is-open .dd-btn"); closeDds(null); if (o) o.focus(); }
+  });
+
   /* Mobile menu */
   var menuBtn = document.getElementById("menu-toggle");
   var nav = document.getElementById("site-nav");

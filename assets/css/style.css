@@ -384,7 +384,6 @@ td .pkg { font-family: var(--font-mono); font-weight: 500; font-size: 0.95rem; }
 
 
 /* ======== Hybrid: flight recorder instruments + constellation night sky ======== */
-.site-header { border-top: 4px solid transparent; border-image: repeating-linear-gradient(-45deg, #FF6A1A 0 10px, #0B0D12 10px 20px) 4; }
 h1, h2 { font-family: var(--font-head); font-weight: 400; }
 h1 { font-size: clamp(3.4rem, 7.8vw, 6.9rem); line-height: 0.95; letter-spacing: -0.03em; }
 h2 { font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.02; letter-spacing: -0.025em; }
@@ -455,6 +454,28 @@ h1 em, h2 em { font-style: italic; padding: 0 0.12em 0 0.02em; background: var(-
 .proof-label { font: 500 .8rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); margin-right: 4px; }
 .proof .chip { text-decoration: none; color: var(--text); }
 .proof .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Dropdown navigation */
+.nav { gap: 4px; }
+.dd { position: relative; }
+.dd-btn { background: none; border: 0; font: inherit; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; }
+.dd-btn .chev { transition: transform .15s; opacity: .8; }
+.dd.is-open .dd-btn .chev { transform: rotate(180deg); }
+.dd.is-open .dd-btn, .dd.has-current .dd-btn { background: var(--panel-strong); color: var(--text); }
+.dd-menu { display: none; position: absolute; top: calc(100% + 10px); left: 0; min-width: 300px; padding: 8px; background: var(--bg-2); border: 1px solid var(--panel-line); border-radius: 10px; box-shadow: var(--shadow); z-index: 60; }
+.dd.is-open .dd-menu { display: block; }
+.dd-item { display: block; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: var(--text); }
+.dd-item b { display: block; font-weight: 600; font-size: .98rem; }
+.dd-item small { display: block; color: var(--text-3); font-size: .85rem; margin-top: 2px; }
+.dd-item:hover, .dd-item:focus-visible { background: var(--panel-strong); }
+.dd-item[aria-current="page"] { box-shadow: inset 3px 0 0 var(--accent); }
+@media (max-width: 860px) {
+  .dd-btn { width: 100%; justify-content: flex-start; pointer-events: none; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); padding: 14px 14px 4px; }
+  .dd-btn .chev { display: none; }
+  .dd.is-open .dd-btn, .dd.has-current .dd-btn { background: none; }
+  .dd-menu { display: block; position: static; min-width: 0; padding: 0; border: 0; box-shadow: none; background: none; }
+  .dd-item { padding: 10px 14px; }
+}
 
 /* ======== Flight recorder ======== */
 :root {

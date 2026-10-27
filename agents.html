@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agents | Reprosia</title>
-<meta name="description" content="Four package-based agents in design: qualification, provenance, reproducibility and prior evidence. People review and sign off; every step is logged.">
+<meta name="description" content="Three package-based agents in design: qualification, provenance and reproducibility. People review and sign off; every step is logged.">
 <link rel="canonical" href="https://reprosia.com/agents.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#070914">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Reprosia">
 <meta property="og:title" content="Agents | Reprosia">
-<meta property="og:description" content="Four package-based agents in design: qualification, provenance, reproducibility and prior evidence. People review and sign off; every step is logged.">
+<meta property="og:description" content="Three package-based agents in design: qualification, provenance and reproducibility. People review and sign off; every step is logged.">
 <meta property="og:url" content="https://reprosia.com/agents.html">
 <meta property="og:image" content="https://reprosia.com/assets/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -30,7 +30,7 @@
     <a class="brand" href="index.html" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
     <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav class="nav" id="site-nav" aria-label="Main">
-      <a class="nav-link" href="platform.html">Platform</a><a class="nav-link is-demo" href="demo.html">Live demo</a><a class="nav-link" href="approach.html">Approach</a><a class="nav-link" href="use-cases.html">Use cases</a><a class="nav-link" href="services.html">Services</a><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <a class="nav-link" href="services.html">Services</a><div class="dd has-current"><button class="nav-link dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="dd-sol">Solutions<svg class="chev" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><div class="dd-menu" id="dd-sol"><a class="dd-item" href="approach.html"><b>Approach</b><small>How the FDA and EMA principles map to records</small></a><a class="dd-item" href="use-cases.html"><b>Use cases</b><small>Where teams use this in practice</small></a><a class="dd-item" href="platform.html"><b>Tooling</b><small>The open-source packages and where they fit</small></a><a class="dd-item" href="agents.html" aria-current="page"><b>Agents</b><small>Four assistants in design</small></a></div></div><a class="nav-link is-demo" href="demo.html">Live demo</a><div class="dd"><button class="nav-link dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="dd-res">Resources<svg class="chev" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><div class="dd-menu" id="dd-res"><a class="dd-item" href="index.html#start"><b>Evidence kit</b><small>Free templates for AI-use governance</small></a><a class="dd-item" href="notes.html"><b>Field notes</b><small>Planned write-ups</small></a><a class="dd-item" href="https://github.com/reprosia-hq"><b>GitHub</b><small>Source and issues</small></a></div></div><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
       <button class="icon-btn" id="theme-toggle" type="button">Dark theme</button>
     </nav>
   </div>
@@ -39,7 +39,7 @@
 
 <div class="wrap page-head">
   <h1>Agents prepare the paperwork. People decide.</h1>
-  <p class="lead">Four agents are in design, one per package. They do the slow, structured work and every step goes into the same tamper-evident log. None of them is built yet.</p>
+  <p class="lead">Three agents are in design, one per evidence package. They do the slow, structured work and every step goes into the same tamper-evident log. None of them is built yet.</p>
 </div>
 <section class="section" id="agents"><div class="wrap">
   <div class="section-head"><h2>One agent per package.</h2>
@@ -48,7 +48,6 @@
     <article class="agent a1"><span class="tag">regulog</span><h3>Qualification agent</h3><p>Drafts IQ/OQ/PQ protocols and the traceability matrix from package metadata. QA approves each document.</p><span class="st">In design</span></article>
     <article class="agent a2"><span class="tag">lineager</span><h3>Provenance agent</h3><p>Explains why row counts changed between datasets and drafts the provenance section of a Reviewer's Guide.</p><span class="st">In design</span></article>
     <article class="agent a3"><span class="tag">reproducr</span><h3>Reproducibility agent</h3><p>Re-runs scripts in a locked environment, flags drift, and names the change most likely to explain it.</p><span class="st">In design</span></article>
-    <article class="agent a4"><span class="tag">bayprior</span><h3>Prior evidence agent</h3><p>Assembles the elicitation, conflict and sensitivity evidence for a Bayesian prior into a review-ready report.</p><span class="st">In design</span></article>
   </div>
   <ol class="loop"><li>Scope</li><li>Draft</li><li>Human review</li><li>Hash and log</li><li>Replay</li></ol>
   <p class="fine">Agents prepare. People decide. Nothing here is called validated until your quality group says so.</p>
@@ -86,8 +85,8 @@
 <section class="section cta">
   <div class="wrap">
     <div class="section-head" style="margin-bottom:0">
-      <h2>Putting AI into a statistical programming workflow?</h2>
-      <p class="lead">Tell me what evidence your QA group would need to see. I am talking to a small number of teams while the AI features take shape.</p>
+      <h2>Preparing R work for regulatory review?</h2>
+      <p class="lead">Describe what your QA group or a reviewer would need to see, whether that is validation, a migration or the use of an AI assistant. Engagements are taken on in small numbers.</p>
       <div class="actions"><a class="btn" href="contact.html">Request early access</a></div>
     </div>
   </div>
@@ -99,16 +98,16 @@
     <div class="foot-grid">
       <div>
         <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
-        <p style="margin-top:12px">An audit layer for AI-assisted analysis in regulated R. Built on open-source packages.</p>
+        <p style="margin-top:12px">Consulting, validation and open-source tooling for regulated R, with a focus on AI-assisted analysis.</p>
       </div>
       <div>
         <h3>Site</h3>
         <ul>
-          <li><a href="platform.html">Platform</a></li>
-          <li><a href="demo.html">Live demo</a></li>
+          <li><a href="services.html">Services</a></li>
           <li><a href="approach.html">Approach</a></li>
           <li><a href="use-cases.html">Use cases</a></li>
-          <li><a href="services.html">Services</a></li>
+          <li><a href="platform.html">Tooling</a></li>
+          <li><a href="demo.html">Live demo</a></li>
           <li><a href="agents.html">Agents</a></li>
           <li><a href="notes.html">Field notes</a></li>
         </ul>
@@ -116,7 +115,7 @@
       <div>
         <h3>Elsewhere</h3>
         <ul>
-          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source packages</a></li>
+          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source tools</a></li>
           <li><a href="https://github.com/reprosia-hq" rel="noopener">GitHub organisation</a></li>
           <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
         </ul>
