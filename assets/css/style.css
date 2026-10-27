@@ -477,6 +477,26 @@ h1 em, h2 em { font-style: italic; padding: 0 0.12em 0 0.02em; background: var(-
   .dd-item { padding: 10px 14px; }
 }
 
+/* Card links: no underlined paragraphs */
+a.card, a.tile { text-decoration: none; color: inherit; }
+a.card .lnk, a.card .tile-go { color: var(--accent); text-decoration: none; font-weight: 600; }
+a.card:hover .lnk { text-decoration: underline; }
+a.card:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--panel-line)); }
+
+/* Theme switch: a chain block travelling between day and night nodes */
+.theme-switch { display: inline-flex; align-items: center; gap: 10px; margin-left: 6px; padding: 3px; background: none; border: 0; color: var(--text-2); cursor: pointer; font: inherit; border-radius: 999px; }
+.theme-switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ts-track { position: relative; display: block; width: 46px; height: 24px; border-radius: 999px; background: var(--panel); border: 1px solid var(--panel-line); }
+.ts-track::before { content: ""; position: absolute; left: 12px; right: 12px; top: 50%; border-top: 1.5px dashed var(--panel-line); }
+.ts-ico { position: absolute; top: 5px; width: 12px; height: 12px; opacity: .75; }
+.ts-sun { left: 5px; } .ts-moon { right: 5px; }
+.ts-block { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 4px; background: var(--accent); box-shadow: 0 0 10px -2px var(--accent); transition: transform .28s cubic-bezier(.4,1.4,.5,1); }
+.theme-switch[aria-pressed="true"] .ts-block { transform: translateX(22px); }
+.theme-switch:hover .ts-track { border-color: var(--accent); }
+.ts-label { display: none; font-size: .95rem; }
+@media (prefers-reduced-motion: reduce) { .ts-block { transition: none; } }
+@media (max-width: 860px) { .theme-switch { margin: 10px 0 0 6px; align-self: flex-start; } .ts-label { display: inline; } }
+
 /* ======== Flight recorder ======== */
 :root {
   --bg:#0B0D10; --bg-2:#101418; --panel:#14181E; --panel-strong:#1B2027; --panel-line:#2D353F;
