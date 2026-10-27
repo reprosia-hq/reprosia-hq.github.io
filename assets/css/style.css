@@ -1,47 +1,51 @@
 /* Reprosia — dark-first, glass and glow. Tokens, then components. */
 :root {
-  --bg: #05070D;
-  --bg-2: #0A1020;
-  --panel: rgba(255, 255, 255, 0.045);
-  --panel-strong: rgba(255, 255, 255, 0.075);
-  --panel-line: rgba(255, 255, 255, 0.10);
-  --text: #E9EEF8;
-  --text-2: #B3BED4;
-  --text-3: #8795B0;
-  --accent: #6EE7F9;
-  --accent-2: #A78BFA;
-  --accent-3: #F0ABFC;
-  --grad: linear-gradient(115deg, #6EE7F9 0%, #A78BFA 55%, #F0ABFC 100%);
-  --ok: #34D399;
-  --ok-soft: rgba(52, 211, 153, 0.14);
-  --bad: #FB7185;
-  --bad-soft: rgba(251, 113, 133, 0.14);
-  --info-soft: rgba(110, 231, 249, 0.13);
-  --code-bg: rgba(3, 6, 14, 0.7);
-  --btn-ink: #04121A;
-  --aurora-1: rgba(110, 231, 249, 0.16);
-  --aurora-2: rgba(167, 139, 250, 0.20);
-  --aurora-3: rgba(240, 171, 252, 0.10);
-  --grid: rgba(255, 255, 255, 0.04);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  --font-head: "Sora", "Inter", system-ui, sans-serif;
+  --bg: #070914;
+  --bg-2: #0C1022;
+  --panel: rgba(255, 255, 255, 0.055);
+  --panel-strong: rgba(255, 255, 255, 0.09);
+  --panel-line: rgba(255, 255, 255, 0.16);
+  --text: #F6F7FC;
+  --text-2: #CBD1E8;
+  --text-3: #9BA4C8;
+  --accent: #FFB347;
+  --accent-2: #FF6A1A;
+  --accent-3: #FFD27A;
+  --grad: linear-gradient(115deg, #FFD27A 0%, #FF9A3D 52%, #FF6A1A 100%);
+  --ok: #3DDC97;
+  --ok-soft: rgba(61, 220, 151, 0.15);
+  --bad: #FF6B81;
+  --bad-soft: rgba(255, 107, 129, 0.15);
+  --info-soft: rgba(255, 179, 71, 0.13);
+  --code-bg: rgba(3, 5, 14, 0.72);
+  --btn-ink: #1A0F05;
+  --aurora-1: rgba(60, 72, 210, 0.30);
+  --aurora-2: rgba(124, 58, 200, 0.26);
+  --aurora-3: rgba(255, 106, 26, 0.16);
+  --grid: rgba(255, 255, 255, 0.035);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  --net-link: #C9CCFF; --net-node: #FFFFFF; --net-pulse: #FFB347; --net-glow: #FFB347; --net-label: #FFE2B0;
+  --bracket: #FF7A2F;
+  --font-head: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --wrap: 1180px;
   --gutter: clamp(16px, 4vw, 32px);
-  --r: 16px;
+  --r: 6px;
   color-scheme: dark;
 }
 :root[data-theme="light"] {
-  --bg: #F6F8FC; --bg-2: #EDF1F9;
-  --panel: rgba(255, 255, 255, 0.72); --panel-strong: rgba(255, 255, 255, 0.95); --panel-line: rgba(11, 16, 32, 0.11);
-  --text: #0B1020; --text-2: #3C486A; --text-3: #5A6788;
-  --accent: #0A7C94; --accent-2: #6D3FE0; --accent-3: #B0309E;
-  --grad: linear-gradient(115deg, #0A7C94 0%, #6D3FE0 60%, #B0309E 100%);
+  --bg: #F6F6FA; --bg-2: #ECECF4;
+  --panel: rgba(255, 255, 255, 0.78); --panel-strong: #FFFFFF; --panel-line: rgba(11, 14, 26, 0.16);
+  --text: #0B0E1A; --text-2: #373D5C; --text-3: #565D7E;
+  --accent: #B8570A; --accent-2: #D9480F; --accent-3: #9A3412;
+  --grad: linear-gradient(115deg, #B45309 0%, #EA580C 55%, #C2410C 100%);
   --ok: #0F7A56; --ok-soft: rgba(15, 122, 86, 0.12); --bad: #C0243F; --bad-soft: rgba(192, 36, 63, 0.10);
-  --info-soft: rgba(10, 124, 148, 0.10); --code-bg: rgba(11, 16, 32, 0.045); --btn-ink: #FFFFFF;
-  --aurora-1: rgba(10, 124, 148, 0.10); --aurora-2: rgba(109, 63, 224, 0.10); --aurora-3: rgba(176, 48, 158, 0.06);
-  --grid: rgba(11, 16, 32, 0.05); --shadow: 0 20px 50px rgba(30, 40, 80, 0.12);
+  --info-soft: rgba(184, 87, 10, 0.10); --code-bg: rgba(11, 14, 26, 0.05); --btn-ink: #FFFFFF;
+  --aurora-1: rgba(60, 72, 210, 0.10); --aurora-2: rgba(124, 58, 200, 0.08); --aurora-3: rgba(255, 106, 26, 0.10);
+  --grid: rgba(11, 14, 26, 0.05); --shadow: 0 20px 50px rgba(30, 40, 80, 0.14);
+  --net-link: #373D5C; --net-node: #0B0E1A; --net-pulse: #D9480F; --net-glow: #D9480F; --net-label: #0B0E1A;
+  --bracket: #D9480F;
   color-scheme: light;
 }
 
@@ -377,3 +381,107 @@ td .pkg { font-family: var(--font-mono); font-weight: 500; font-size: 0.95rem; }
 
 /* selected state for segmented answers */
 .seg button[aria-pressed="true"] { background: var(--info-soft); color: var(--accent); }
+
+
+/* ======== Hybrid: flight recorder instruments + constellation night sky ======== */
+.site-header { border-top: 4px solid transparent; border-image: repeating-linear-gradient(-45deg, #FF6A1A 0 10px, #0B0D12 10px 20px) 4; }
+h1, h2 { font-family: var(--font-head); font-weight: 400; }
+h1 { font-size: clamp(3.4rem, 7.8vw, 6.9rem); line-height: 0.95; letter-spacing: -0.03em; }
+h2 { font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.02; letter-spacing: -0.025em; }
+h1 em, h2 em { font-style: italic; padding: 0 0.12em 0 0.02em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.page-head h1 { font-size: clamp(2.9rem, 6.2vw, 5.2rem); max-width: 16ch; }
+.hero h1 { max-width: 11ch; }
+.brand { font: 400 1.75rem/1 var(--font-head); letter-spacing: -0.01em; }
+.brand-mark { color: var(--accent-2); }
+.tile h3, .case h3 { font: 400 1.75rem/1.1 var(--font-head); letter-spacing: -0.01em; }
+.score-big { font: 400 3.4rem/1 var(--font-head); }
+.nav-link[aria-current="page"] { box-shadow: inset 0 0 0 1px var(--panel-line); }
+.nav-link.is-demo { color: var(--accent); }
+.btn { border-radius: 6px; }
+.btn-ghost, .icon-btn, .tab, .seg, .pill, .alter-btn, .ledger-status, .tag, .chip { border-radius: 6px; }
+.tabs { border-radius: 10px; }
+.tab { border-radius: 6px; }
+.ledger-status { border-radius: 4px; }
+.cta .wrap { border-radius: 10px; border-left: 6px solid var(--accent-2); }
+.hero { padding-block: clamp(56px, 8vw, 120px); }
+.hero-canvas { opacity: 1; }
+.hero-note { margin-top: 24px; }
+
+/* timestamps like flight telemetry */
+.entry { grid-template-columns: 68px minmax(0, 1fr) auto; }
+.entry-seq { color: var(--accent); }
+.entry-seq::before { content: "T+00:0"; }
+
+/* instrument corner brackets */
+.ledger, .tile, .panel, .agent, .card, .col, .layers { position: relative; }
+.ledger::after, .tile::after, .panel::after, .agent::after, .card::after, .col::after, .layers::after {
+  content: ""; position: absolute; inset: -1px; pointer-events: none; border-radius: inherit;
+  background:
+    linear-gradient(var(--bracket), var(--bracket)) top left / 16px 2px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) top left / 2px 16px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) bottom right / 16px 2px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) bottom right / 2px 16px no-repeat;
+}
+.ledger { box-shadow: var(--shadow), 0 0 80px -24px rgba(255, 106, 26, 0.55); }
+.tile:hover { border-color: color-mix(in srgb, var(--accent-2) 55%, var(--panel-line)); }
+
+/* new sections */
+.agents { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.agent, .card, .note { display: flex; flex-direction: column; gap: 10px; padding: 26px; background: var(--panel); border: 1px solid var(--panel-line); border-radius: var(--r); }
+.agent h3, .card h3, .note h3 { font: 400 1.75rem/1.08 var(--font-head); letter-spacing: -0.01em; }
+.agent p, .card p, .note p { flex: 1; color: var(--text-2); font-size: 0.97rem; margin: 0; }
+.agent .tag, .card .tag, .col .tag, .note .tag { align-self: flex-start; }
+.st { font: 500 0.78rem var(--font-mono); color: var(--accent); }
+.loop { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; padding: 0; list-style: none; counter-reset: l; }
+.loop li { counter-increment: l; padding: 9px 16px; border: 1px solid var(--panel-line); background: var(--panel); border-radius: 6px; font-weight: 500; }
+.loop li::before { content: counter(l); margin-right: 10px; color: var(--accent); font-family: var(--font-mono); }
+.fine { margin: 20px 0 0; color: var(--text-3); font-size: 0.95rem; max-width: 70ch; }
+.start, .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.links { display: flex; gap: 14px; flex-wrap: wrap; }
+.lnk { font-weight: 600; }
+.note { border-top: 3px solid var(--accent-2); }
+.ladder { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 16px; }
+.col h3 { font: 400 1.75rem/1.08 var(--font-head); letter-spacing: -0.01em; }
+.col ul { margin: 12px 0 0; padding-left: 1.1em; }
+.col li { margin-bottom: 10px; }
+.pkgs { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 34px; }
+.pkgs a { font: 500 0.85rem var(--font-mono); padding: 8px 14px; border: 1px solid var(--panel-line); border-radius: 6px; color: var(--text-2); text-decoration: none; }
+.pkgs a:hover { border-color: var(--accent); color: var(--text); }
+@media (max-width: 960px) { .agents, .start, .notes, .ladder { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .entry { grid-template-columns: 60px minmax(0, 1fr) auto; } }
+.hero h1 { font-size: clamp(3rem, 5.6vw, 5.3rem); max-width: 13ch; }
+
+.proof { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 28px; }
+.proof-label { font: 500 .8rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); margin-right: 4px; }
+.proof .chip { text-decoration: none; color: var(--text); }
+.proof .chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ======== Flight recorder ======== */
+:root {
+  --bg:#0B0D10; --bg-2:#101418; --panel:#14181E; --panel-strong:#1B2027; --panel-line:#2D353F;
+  --text:#F4F6F9; --text-2:#BDC6D2; --text-3:#8D98A6;
+  --accent:#FF6A1A; --accent-2:#FF6A1A; --accent-3:#FFC857;
+  --grad:linear-gradient(115deg,#FF6A1A,#FF6A1A);
+  --aurora-1:rgba(255,106,26,0); --aurora-2:rgba(255,106,26,0); --aurora-3:rgba(255,106,26,.16);
+  --net-link:#FF9A5C; --net-node:#FFB27F; --net-pulse:#FF6A1A; --net-glow:#FFC857; --net-label:#FFC857;
+  --font-head:"Barlow Condensed","Arial Narrow",sans-serif; --font-body:"Barlow",system-ui,sans-serif; --r:3px;
+}
+:root[data-theme="light"] {
+  --bg:#F5F3EF; --bg-2:#ECE9E3; --panel:#FFFFFF; --panel-strong:#FFFFFF; --panel-line:#CFC9BE;
+  --text:#14110D; --text-2:#3E3A33; --text-3:#5C574E;
+  --accent:#C2410C; --accent-2:#C2410C; --accent-3:#9A3412;
+  --grad:linear-gradient(115deg,#C2410C,#C2410C);
+  --aurora-1:rgba(194,65,12,0); --aurora-2:rgba(194,65,12,0); --aurora-3:rgba(194,65,12,.10);
+  --net-link:#8A5A3C; --net-node:#5C3A22; --net-pulse:#C2410C; --net-glow:#C2410C; --net-label:#14110D;
+  --bracket:#C2410C; --btn-ink:#FFFFFF; --code-bg:rgba(20,17,13,.05); --shadow:0 18px 44px rgba(60,40,20,.14);
+}
+body { font-size: 1.06rem; }
+h1, h2, h3, .brand, .tile h3, .case h3, .agent h3, .card h3, .note h3, .col h3, .score-big { font-family: var(--font-head); font-weight: 700; }
+h1 { font-weight: 800; letter-spacing: -0.015em; line-height: .96; }
+h1 em, h2 em { font-style: normal; background: none; -webkit-text-fill-color: var(--accent); color: var(--accent); padding: 0; }
+.hero h1 { font-size: clamp(3.2rem, 6.4vw, 6rem); max-width: 14ch; }
+.brand { font-weight: 800; font-size: 1.6rem; }
+.btn { border-radius: 3px; background: var(--accent); color: var(--btn-ink); box-shadow: 0 10px 30px -12px var(--accent); }
+.btn-ghost, .btn.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--panel-line); }
+.ledger, .tile, .panel, .agent, .card, .col, .layers { background: var(--panel); backdrop-filter: none; }
+.tag, .chip, .tab, .pill, .loop li { border-radius: 2px; }

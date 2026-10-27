@@ -7,7 +7,7 @@
 <meta name="description" content="Reprosia is building the audit layer for AI-assisted analysis in regulated R: tamper-evident records of what ran, on which data, who reviewed it, and whether it can be re-run.">
 <link rel="canonical" href="https://reprosia.com/">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#05070D">
+<meta name="theme-color" content="#070914">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Reprosia">
 <meta property="og:title" content="Reprosia: an audit layer for AI-assisted analysis in regulated R">
@@ -19,7 +19,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("reprosia-theme");document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -37,20 +38,20 @@
 <main id="main">
 
 <section class="hero">
-  <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+  <canvas class="hero-canvas" id="net" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
       <span class="chip">Early-stage project, open to a few teams</span>
-      <h1 style="margin-top:22px">Show your work, <span class="grad">even when an AI helped.</span></h1>
+      <h1 style="margin-top:22px">A chain of evidence for <em>every AI&#8209;assisted analysis.</em></h1>
       <p class="lead">Reprosia is building the audit layer for AI-assisted analysis in regulated R: a tamper-evident record of what ran, on which data, who reviewed it, and whether anyone can re-run it.</p>
       <div class="actions">
         <a class="btn" href="demo.html">Try the live demo</a>
-        <a class="btn btn-ghost" href="contact.html">Request early access</a>
+        <a class="btn btn-ghost" href="#start">Start with the free kit</a>
       </div>
-      <div class="chip-row">
-        <span class="chip">regulog</span><span class="chip">lineager</span><span class="chip">reproducr</span><span class="chip">bayprior</span>
+      <div class="proof">
+        <span class="proof-label">Open source, on CRAN</span>
+        <a class="chip" href="https://cran.r-project.org/package=regulog" rel="noopener">regulog</a><a class="chip" href="https://cran.r-project.org/package=lineager" rel="noopener">lineager</a><a class="chip" href="https://cran.r-project.org/package=reproducr" rel="noopener">reproducr</a><a class="chip" href="https://cran.r-project.org/package=bayprior" rel="noopener">bayprior</a>
       </div>
-      <p class="hero-note"><span class="pulse"></span>Four open-source packages, all on CRAN.</p>
     </div>
     <div class="ledger" aria-labelledby="ledger-title">
       <div class="ledger-top">
@@ -105,36 +106,20 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Agents can write the code. The record is still missing.</h2>
-      <p>Four questions come up whenever an auditor looks at AI-assisted analysis. Each one maps to something that exists today or something being built.</p>
-    </div>
-    <ul class="rows">
-      <li class="row">
-        <h3>What did the AI touch?</h3>
-        <p>regulog writes each action to a hash-chained, user-attributed log, so a missing or altered entry shows up on verification. Capturing prompts and model output in that same log is in development.</p>
-        <div class="row-side"><span class="tag tag-live">regulog on CRAN</span><br><span class="tag">AI capture in development</span></div>
-      </li>
-      <li class="row">
-        <h3>Which data was it run on?</h3>
-        <p>lineager traces rows from source to analysis dataset, records every exclusion with its reason, and writes a provenance report styled after the CDISC Reviewer's Guide.</p>
-        <div class="row-side"><span class="tag tag-live">lineager on CRAN</span></div>
-      </li>
-      <li class="row">
-        <h3>Who reviewed it, and what did they decide?</h3>
-        <p>Most AI workflows keep no record of who accepted, edited or rejected an output. This is the first thing Reprosia is adding on top of regulog.</p>
-        <div class="row-side"><span class="tag">In development</span></div>
-      </li>
-      <li class="row">
-        <h3>Can someone re-run it and get the same result?</h3>
-        <p>reproducr captures the session, locks dependencies, certifies scripts and flags drift when results change.</p>
-        <div class="row-side"><span class="tag tag-live">reproducr on CRAN</span></div>
-      </li>
-    </ul>
+<section class="section" id="start"><div class="wrap">
+  <div class="section-head"><h2>Three ways to start.</h2><p>Begin with something you can use this week, then go deeper only if it helps.</p></div>
+  <div class="start">
+    <article class="card s1"><span class="tag">Free download</span><h3>Evidence kit</h3>
+      <p>An AI-use register, a one-page context-of-use template and a reviewer checklist, ready to adapt to your SOPs.</p>
+      <div class="links"><a class="lnk" href="downloads/ai-use-register.csv">AI-use register</a><a class="lnk" href="downloads/context-of-use-one-pager.md">Context of use</a><a class="lnk" href="downloads/ai-output-review-checklist.md">Reviewer checklist</a></div></article>
+    <article class="card s2"><span class="tag">Free, 30 minutes</span><h3>Intro call</h3>
+      <p>Walk me through where AI enters your analysis. I will say which records a reviewer would ask for and which you probably have already.</p>
+      <div class="links"><a class="lnk" href="contact.html?topic=Intro%20call">Ask for a call</a></div></article>
+    <article class="card s3"><span class="tag">Fixed scope</span><h3>Evidence sprint</h3>
+      <p>About two weeks on one workflow: a gap report against the ten FDA and EMA principles, an audit log running on one real script, and a replay check. Scoped and quoted up front.</p>
+      <div class="links"><a class="lnk" href="contact.html?topic=Evidence%20sprint">Ask about a sprint</a></div></article>
   </div>
-</section>
+</div></section>
 
 <section class="section">
   <div class="wrap">
@@ -171,31 +156,16 @@
 
 <section class="section">
   <div class="wrap">
-    <div class="section-head"><h2>Where things stand.</h2></div>
-    <div class="cols">
-      <div class="col">
-        <h3>Available now <span class="tag tag-live">Live</span></h3>
-        <ul>
-          <li>Audit logging, provenance, reproducibility checks and prior elicitation, as four CRAN packages</li>
-          <li>IQ/OQ/PQ qualification scripts for regulog</li>
-          <li>Consulting on regulated R, validation and SAS-to-R comparison</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>In development <span class="tag">Building</span></h3>
-        <ul>
-          <li>Audited AI assist: prompts, model output, review decisions and data hashes in one log</li>
-          <li>Replay of an AI-assisted analysis in a locked environment</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>Planned <span class="tag tag-plan">Not started</span></h3>
-        <ul>
-          <li>estimandr, for documenting ICH E9(R1) estimands</li>
-          <li>A qualification pack for AI-assisted workflows</li>
-        </ul>
-      </div>
+    <div class="section-head">
+      <h2>Services anchored on open-source packages.</h2>
+      <p>The packages prove the method. The services apply it to your environment, your data and your quality system.</p>
     </div>
+    <div class="start">
+      <article class="card"><span class="tag">Fixed scope</span><h3>Qualification, audits, provenance</h3><p>IQ/OQ/PQ in your environment, reproducibility audits and provenance set-up, each scoped and quoted up front.</p></article>
+      <article class="card"><span class="tag">Advisory</span><h3>Migration, estimands, AI governance</h3><p>SAS-to-R equivalence testing, ICH E9(R1) estimand specification and what to log when AI is involved.</p></article>
+      <article class="card"><span class="tag">Ongoing</span><h3>Support and extensions</h3><p>Updates, priority fixes and custom extensions, contributed back where possible.</p></article>
+    </div>
+    <div class="links" style="margin-top:22px"><a class="lnk" href="services.html">See all services</a><a class="lnk" href="agents.html">Meet the agents in design</a><a class="lnk" href="notes.html">Field notes</a></div>
   </div>
 </section>
 
@@ -225,6 +195,8 @@
           <li><a href="approach.html">Approach</a></li>
           <li><a href="use-cases.html">Use cases</a></li>
           <li><a href="services.html">Services</a></li>
+          <li><a href="agents.html">Agents</a></li>
+          <li><a href="notes.html">Field notes</a></li>
         </ul>
       </div>
       <div>
@@ -240,6 +212,6 @@
   </div>
 </footer>
 <script src="assets/js/main.js" defer></script>
-<script src="assets/js/ledger.js" defer></script>
+<script src="assets/js/network.js" defer></script><script src="assets/js/hero-net.js" defer></script><script src="assets/js/ledger.js" defer></script>
 </body>
 </html>

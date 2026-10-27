@@ -1,0 +1,3 @@
+tool,version_or_model,owner,tasks_allowed,tasks_excluded,data_it_may_see,context_of_use,review_level,reviewers_required,log_location,replay_method,last_reviewed,qa_contact
+"Example assistant (replace this row)","model name and version",jsmith,"Draft R code for ADaM derivations; explain error messages","Primary efficacy analyses; anything involving unblinded data","Synthetic or de-identified data only","Supportive analysis","Full review of every output",1,"Audit log path or system","Re-run in the locked environment and compare output hashes",2026-10-01,qa-team
+"","","","","","","","","","","","",""

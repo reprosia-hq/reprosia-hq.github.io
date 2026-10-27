@@ -7,7 +7,7 @@
 <meta name="description" content="How Reprosia sits between your R environment and your quality system: hash-chained logs, provenance, reproducibility checks and an audited AI assist in development.">
 <link rel="canonical" href="https://reprosia.com/platform.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#05070D">
+<meta name="theme-color" content="#070914">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Reprosia">
 <meta property="og:title" content="Platform | Reprosia">
@@ -19,7 +19,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem("reprosia-theme");document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light")}catch(e){document.documentElement.setAttribute("data-theme","light")}</script>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -122,6 +123,37 @@ ai_replay(session)  # locked environment, recorded seed</code></pre>
   </div>
 </section>
 
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Four questions an auditor will ask.</h2>
+      <p>Four questions come up whenever an auditor looks at AI-assisted analysis. Each one maps to something that exists today or something being built.</p>
+    </div>
+    <ul class="rows">
+      <li class="row">
+        <h3>What did the AI touch?</h3>
+        <p>regulog writes each action to a hash-chained, user-attributed log, so a missing or altered entry shows up on verification. Capturing prompts and model output in that same log is in development.</p>
+        <div class="row-side"><span class="tag tag-live">regulog on CRAN</span><br><span class="tag">AI capture in development</span></div>
+      </li>
+      <li class="row">
+        <h3>Which data was it run on?</h3>
+        <p>lineager traces rows from source to analysis dataset, records every exclusion with its reason, and writes a provenance report styled after the CDISC Reviewer's Guide.</p>
+        <div class="row-side"><span class="tag tag-live">lineager on CRAN</span></div>
+      </li>
+      <li class="row">
+        <h3>Who reviewed it, and what did they decide?</h3>
+        <p>Most AI workflows keep no record of who accepted, edited or rejected an output. This is the first thing Reprosia is adding on top of regulog.</p>
+        <div class="row-side"><span class="tag">In development</span></div>
+      </li>
+      <li class="row">
+        <h3>Can someone re-run it and get the same result?</h3>
+        <p>reproducr captures the session, locks dependencies, certifies scripts and flags drift when results change.</p>
+        <div class="row-side"><span class="tag tag-live">reproducr on CRAN</span></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section class="section cta">
   <div class="wrap">
     <div class="section-head" style="margin-bottom:0">
@@ -147,6 +179,8 @@ ai_replay(session)  # locked environment, recorded seed</code></pre>
           <li><a href="approach.html">Approach</a></li>
           <li><a href="use-cases.html">Use cases</a></li>
           <li><a href="services.html">Services</a></li>
+          <li><a href="agents.html">Agents</a></li>
+          <li><a href="notes.html">Field notes</a></li>
         </ul>
       </div>
       <div>

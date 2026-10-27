@@ -5,7 +5,7 @@
   var RP = (window.RP = {});
   RP.reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-  /* Theme: dark by default; the visitor can switch to light and the choice is remembered. */
+  /* Theme: light by default; the visitor can switch to dark and the choice is remembered. */
   try {
     var saved = localStorage.getItem("reprosia-theme");
     if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
@@ -14,7 +14,7 @@
   function isDark() {
     var t = root.getAttribute("data-theme");
     if (t) return t === "dark";
-    return true; /* dark unless the visitor chose light */
+    return false; /* light unless the visitor chose dark */
   }
   function syncThemeBtn() { if (themeBtn) themeBtn.textContent = isDark() ? "Light theme" : "Dark theme"; }
   if (themeBtn) {
@@ -213,7 +213,7 @@
       if (!chain.entries.length) {
         var li0 = document.createElement("li");
         li0.className = "entry";
-        var sp = document.createElement("span"); sp.className = "entry-seq"; sp.textContent = "-";
+        var sp = document.createElement("span"); sp.className = "entry-seq"; sp.textContent = "0";
         var mn = document.createElement("div"); mn.className = "entry-main";
         var wt = document.createElement("div"); wt.className = "entry-what muted"; wt.textContent = opts.empty || "No entries yet.";
         mn.appendChild(wt); li0.appendChild(sp); li0.appendChild(mn); listEl.appendChild(li0);
