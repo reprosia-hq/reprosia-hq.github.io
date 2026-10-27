@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live demo: audited AI assist, readiness check, evidence search | Reprosia</title>
+<meta name="description" content="Interactive demos that run in your browser: a simulated audited AI-assist workflow with a hash-chained log, an evidence readiness check, and a searchable answer set.">
+<link rel="canonical" href="https://reprosia.com/demo.html">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#05070D">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Reprosia">
+<meta property="og:title" content="Live demo: audited AI assist, readiness check, evidence search | Reprosia">
+<meta property="og:description" content="Interactive demos that run in your browser: a simulated audited AI-assist workflow with a hash-chained log, an evidence readiness check, and a searchable answer set.">
+<meta property="og:url" content="https://reprosia.com/demo.html">
+<meta property="og:image" content="https://reprosia.com/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="index.html" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+    <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a class="nav-link" href="platform.html">Platform</a><a class="nav-link is-demo" href="demo.html" aria-current="page">Live demo</a><a class="nav-link" href="approach.html">Approach</a><a class="nav-link" href="use-cases.html">Use cases</a><a class="nav-link" href="services.html">Services</a><a class="nav-link" href="about.html">About</a><a class="nav-link" href="contact.html">Contact</a>
+      <button class="icon-btn" id="theme-toggle" type="button">Dark theme</button>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<div class="wrap page-head">
+  <h1>Try the audit layer in your browser.</h1>
+  <p class="lead">Three working tools. They run entirely on this page: no model is called and nothing is uploaded. The AI draft in the workbench is simulated.</p>
+</div>
+<section class="section" style="padding-top:0">
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="Demo tools">
+    <button class="tab" role="tab" id="tab-wb" data-panel="panel-wb" aria-selected="true" type="button">Audited AI assist</button>
+    <button class="tab" role="tab" id="tab-ready" data-panel="panel-ready" aria-selected="false" tabindex="-1" type="button">Readiness check</button>
+    <button class="tab" role="tab" id="tab-search" data-panel="panel-search" aria-selected="false" tabindex="-1" type="button">Ask the evidence map</button>
+  </div>
+
+  <div id="panel-wb" class="tabpanel" role="tabpanel" aria-labelledby="tab-wb">
+    <div class="bench" id="wb">
+      <div>
+        <div class="panel stage" id="st-scope" data-locked="false">
+          <h3>1. Scope the task</h3>
+          <p class="panel-sub">Record what the assistant may do and how the result will be used.</p>
+          <div class="pills" id="task-pills">
+            <button class="pill" type="button" data-k="cfb" aria-pressed="true">Change from baseline</button>
+            <button class="pill" type="button" data-k="km" aria-pressed="false">Median survival</button>
+            <button class="pill" type="button" data-k="ae" aria-pressed="false">Treatment-emergent AEs</button>
+          </div>
+          <div class="field"><label for="tier">Context of use</label>
+            <select id="tier"><option value="explore">Exploratory</option><option value="support" selected>Supportive analysis</option><option value="primary">Primary analysis</option></select></div>
+          <p class="note" id="note-tier">Illustrative rule: one named reviewer is enough for this context of use.</p>
+          <div class="row-inline"><button class="btn btn-small" id="btn-scope" type="button">Record scope</button></div>
+        </div>
+
+        <div class="panel stage" id="st-draft" data-locked="true">
+          <h3>2. Capture the AI draft</h3>
+          <p class="panel-sub">The prompt, the model and the output are logged as one entry.</p>
+          <pre class="code codeview" id="codeview" aria-live="polite">The draft appears here once generated.</pre>
+          <div class="row-inline"><button class="btn btn-small" id="btn-draft" type="button">Generate draft</button></div>
+          <p class="note"><span class="note-strong">Simulated.</span> The code is canned and no model is called.</p>
+        </div>
+
+        <div class="panel stage" id="st-review" data-locked="true">
+          <h3>3. Record the review</h3>
+          <p class="panel-sub">A named person accepts, edits or rejects the draft. The decision joins the chain.</p>
+          <div class="field"><label for="reviewer">Reviewer</label><input id="reviewer" class="input" type="text" value="jsmith" autocomplete="off"></div>
+          <div class="row-inline">
+            <div class="seg" id="seg-review" role="group" aria-label="Review decision">
+              <button type="button" id="rv-accept">Accept</button><button type="button" id="rv-edit">Edit</button><button type="button" id="rv-reject">Reject</button>
+            </div>
+          </div>
+          <div id="edit-wrap" hidden style="margin-top:12px">
+            <label class="label" for="edit-area">Edited code</label>
+            <textarea id="edit-area" class="edit-area"></textarea>
+            <div class="row-inline"><button class="btn btn-small" id="btn-submit-edit" type="button">Submit edit</button></div>
+          </div>
+          <div class="verdict info" id="rv-verdict" hidden></div>
+        </div>
+
+        <div class="panel stage" id="st-data" data-locked="true">
+          <h3>4. Fix the data version</h3>
+          <p class="panel-sub">A fingerprint ties the run to an exact dataset.</p>
+          <div class="pills" id="data-pills">
+            <button class="pill" type="button" data-k="v2" aria-pressed="false">Dataset v2</button>
+            <button class="pill" type="button" data-k="v3" aria-pressed="true">Dataset v3</button>
+          </div>
+          <div class="row-inline"><button class="btn btn-small" id="btn-data" type="button">Record data version</button></div>
+          <div class="verdict info" id="data-verdict" hidden></div>
+        </div>
+
+        <div class="panel stage" id="st-replay" data-locked="true">
+          <h3>5. Replay</h3>
+          <p class="panel-sub">Re-run in the locked environment and compare with the logged result.</p>
+          <label class="note" style="display:flex;gap:8px;align-items:center;margin:0 0 12px"><input type="checkbox" id="drift"> Simulate drift: a package version changed</label>
+          <div class="row-inline" style="margin-top:0"><button class="btn btn-small" id="btn-replay" type="button">Replay</button></div>
+          <div class="verdict info" id="replay-verdict" hidden></div>
+        </div>
+      </div>
+
+      <div class="ledger" style="position:sticky;top:86px">
+        <div class="ledger-top">
+          <span class="ledger-title">Evidence log</span>
+          <span class="ledger-status" id="wb-status" role="status" aria-live="polite">Chain empty</span>
+        </div>
+        <ol class="entries" id="wb-entries"></ol>
+        <div class="ledger-foot">
+          <div class="row-inline" style="margin:0">
+            <button class="btn btn-small btn-ghost" id="btn-export-json" type="button" disabled>Export JSON</button>
+            <button class="btn btn-small btn-ghost" id="btn-export-md" type="button" disabled>Export summary</button>
+          </div>
+          <button class="link-btn" id="btn-reset" type="button">Reset</button>
+        </div>
+        <p class="note" style="margin-top:10px">Press Alter on any entry to see verification fail. This is a browser demo, not regulog output.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-ready" class="tabpanel" role="tabpanel" aria-labelledby="tab-ready" hidden>
+    <div class="panel" id="rd-intro">
+      <h3>Where does your AI-assisted workflow stand?</h3>
+      <p class="panel-sub">One question per FDA and EMA principle. Answer for the workflow you have today.</p>
+      <div id="rd-questions"></div>
+      <div class="row-inline"><button class="btn" id="btn-rd-result" type="button" disabled>Show my result</button><span class="note" id="rd-progress" style="margin:0"></span></div>
+    </div>
+    <div id="rd-result" hidden>
+      <div class="panel">
+        <div class="radar-wrap">
+          <div id="rd-radar"></div>
+          <div>
+            <div class="score-big grad" id="rd-score"></div>
+            <p class="lead" id="rd-label" style="margin:8px 0 0"></p>
+            <p class="note">Self-assessed and indicative. A conversation starter, not an audit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Gaps to close</h3>
+        <p class="panel-sub">Ranked with the least-covered principles first.</p>
+        <ul class="gap-list" id="rd-gaps"></ul>
+        <div class="row-inline">
+          <button class="btn btn-small" id="btn-rd-md" type="button">Download report</button>
+          <a class="btn btn-small btn-ghost" id="rd-mailto" href="mailto:team@reprosia.com">Discuss with Reprosia</a>
+          <button class="link-btn" id="btn-rd-reset" type="button">Start again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-search" class="tabpanel" role="tabpanel" aria-labelledby="tab-search" hidden>
+    <div class="panel">
+      <h3>Ask the evidence map</h3>
+      <p class="panel-sub">Searches a fixed set of answers written for this site. It is keyword retrieval, not a chatbot, and it does not call a model.</p>
+      <form class="search" id="s-form">
+        <input class="input" id="s-input" type="search" placeholder="For example: who signs off AI output?" aria-label="Your question" autocomplete="off">
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div class="pills" id="s-chips" style="margin-top:14px"></div>
+      <div class="stack" id="s-results" aria-live="polite"></div>
+    </div>
+  </div>
+  <script type="application/json" id="kb">[{"q": "What does Reprosia do?", "a": "It is building the audit layer for AI-assisted analysis in regulated R: tamper-evident records of what ran, on which data, who reviewed it and whether it can be re-run. Four supporting packages are on CRAN. The AI-specific capture is in development.", "src": "Overview", "href": "platform.html"}, {"q": "Is regulog compliant with 21 CFR Part 11?", "a": "It is designed around 21 CFR Part 11 and EU Annex 11 and ships IQ/OQ/PQ qualification scripts. Whether a deployment is compliant depends on how your organisation configures, governs and validates it, so no package can make you compliant on its own.", "src": "Compliance", "href": "platform.html"}, {"q": "Does Reprosia call a large language model?", "a": "No. Reprosia does not ship or call a model. It records and verifies what happens around the model you choose. The demos on this page are simulations that run in your browser.", "src": "AI", "href": "platform.html"}, {"q": "How does a hash chain detect tampering?", "a": "Each record stores a SHA-256 hash of its own content plus the hash of the previous record. Changing any record breaks its own hash and the link to the next one, so verification fails at that point. Press Alter on any entry in the workbench log to see it.", "src": "Audit log", "href": "index.html"}, {"q": "Can I use the packages without Reprosia?", "a": "Yes. regulog, lineager, reproducr and bayprior are open-source packages on CRAN and work on their own.", "src": "Packages", "href": "index.html"}, {"q": "Which data version did an analysis use?", "a": "lineager traces rows from source to analysis dataset and records every exclusion with its reason. Fingerprinting the input data in each AI-assisted run is part of the planned workflow.", "src": "Data provenance", "href": "use-cases.html"}, {"q": "How do I show who reviewed AI output?", "a": "Record the reviewer's name and decision as a log entry next to the AI draft. regulog's user-attributed log supports this pattern today. Capturing AI-specific review decisions is in development, and the workbench simulates the intended flow.", "src": "Review records", "href": "demo.html#wb"}, {"q": "Can someone re-run an analysis and get the same result?", "a": "reproducr captures the session, locks dependencies, certifies scripts and flags drift when results change. The workbench replay step simulates a drift check.", "src": "Reproducibility", "href": "use-cases.html"}, {"q": "Does Reprosia build eCTD packages or Define-XML?", "a": "No. lineager produces provenance reports that can support a Reviewer's Guide, but Reprosia does not assemble eCTD submissions or generate Define-XML.", "src": "Scope", "href": "platform.html"}, {"q": "Is the audited AI assist available yet?", "a": "Not yet. It is in development and no release date is promised. The workbench is a browser simulation of the intended workflow.", "src": "Status", "href": "platform.html"}, {"q": "What are the FDA and EMA AI principles?", "a": "Ten joint guiding principles published in January 2026 for AI across the drug lifecycle. They are non-binding. The approach page maps each one to what Reprosia supports today and says where it does not help.", "src": "Regulators", "href": "approach.html"}, {"q": "Which AI records fall under Part 11?", "a": "That is a decision for your QA group to make and document. Reprosia can supply the logs, but it cannot decide scope for you.", "src": "Compliance", "href": "approach.html"}, {"q": "Can you help migrate from SAS to R?", "a": "Yes, as consulting: equivalence testing between SAS and R outputs, parallel validation documentation and a migration audit trail.", "src": "Services", "href": "services.html"}, {"q": "How are Bayesian priors documented?", "a": "bayprior supports structured prior elicitation, conflict diagnostics, sensitivity analysis and regulatory reporting for clinical trials.", "src": "Packages", "href": "use-cases.html"}, {"q": "Who is behind Reprosia?", "a": "Reprosia is an independent, early-stage project by Ndoh Penn, a biostatistician and R developer in Belgium who maintains the four packages.", "src": "About", "href": "about.html"}, {"q": "Is my data sent anywhere?", "a": "No. The demos run entirely in your browser and nothing is uploaded. The contact form opens your email app and sends nothing from the page.", "src": "Privacy", "href": "contact.html"}, {"q": "What is not covered?", "a": "Reprosia is not a validated system out of the box, not a compliance certificate, not submission assembly and not an AI model. Your own validation and quality-system duties remain.", "src": "Scope", "href": "platform.html"}, {"q": "How do I detect drift when something changes?", "a": "reproducr flags drift when results change between runs. In the workbench, tick the drift option before the replay to see a mismatch recorded in the log.", "src": "Reproducibility", "href": "demo.html#wb"}, {"q": "How do I get early access?", "a": "Email team@reprosia.com or use the contact page. Early conversations are open to a small number of teams.", "src": "Contact", "href": "contact.html"}, {"q": "Principle 1: Human-centric by design", "a": "To show: Who reviewed, accepted, edited or rejected each AI output. Today: regulog keeps a user-attributed log. Capturing review decisions on AI outputs is in development. Support level: Partial.", "src": "Principle 1", "href": "approach.html"}, {"q": "Principle 2: Risk-based approach", "a": "To show: Validation effort that scales with the tool's context of use and risk. Today: No software feature. Consulting can support the risk assessment. Support level: Guidance only.", "src": "Principle 2", "href": "approach.html"}, {"q": "Principle 3: Adherence to standards", "a": "To show: AI work sits inside existing GxP controls, audit trails included. Today: regulog is designed around 21 CFR Part 11 and EU Annex 11. You decide which AI records are in scope and document it. Support level: Supported.", "src": "Principle 3", "href": "approach.html"}, {"q": "Principle 4: Clear context of use", "a": "To show: The task, scope and limits of each AI tool, written down. Today: No software feature. Consulting and templates only. Support level: Guidance only.", "src": "Principle 4", "href": "approach.html"}, {"q": "Principle 5: Multidisciplinary expertise", "a": "To show: Statisticians, QA, IT and regulatory staff working together. Today: Training and workshops. Support level: Guidance only.", "src": "Principle 5", "href": "approach.html"}, {"q": "Principle 6: Data governance and documentation", "a": "To show: Data sources, handling and lineage, tied to each run. Today: lineager traces rows and exclusions from source to analysis dataset. Support level: Supported.", "src": "Principle 6", "href": "approach.html"}, {"q": "Principle 7: Model design and development", "a": "To show: Traceable development, versioned releases and frozen environments. Today: reproducr captures sessions and locks dependencies. It covers the R environment, not model training. Support level: Partial.", "src": "Principle 7", "href": "approach.html"}, {"q": "Principle 8: Risk-based performance assessment", "a": "To show: Predefined metrics and acceptance criteria, with error monitoring. Today: reproducr flags drift when results change. Model-specific performance metrics are not covered. Support level: Partial.", "src": "Principle 8", "href": "approach.html"}, {"q": "Principle 9: Lifecycle management", "a": "To show: Planned updates, re-validation and ongoing monitoring. Today: Drift detection and replay help. The change-control process is yours. Support level: Partial.", "src": "Principle 9", "href": "approach.html"}, {"q": "Principle 10: Clear, essential information", "a": "To show: Documentation of intended use, capabilities and limits. Today: lineager and bayprior generate structured reports. AI-specific documentation templates are in development. Support level: Partial.", "src": "Principle 10", "href": "approach.html"}]</script>
+</div>
+</section>
+
+<section class="section cta">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Want these on your own workflow?</h2>
+      <p class="lead">Tell me where AI is entering your statistical programming and what your QA group asks for.</p>
+      <div class="actions"><a class="btn" href="contact.html">Request early access</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
+        <p style="margin-top:12px">An audit layer for AI-assisted analysis in regulated R. Built on open-source packages.</p>
+      </div>
+      <div>
+        <h3>Site</h3>
+        <ul>
+          <li><a href="platform.html">Platform</a></li>
+          <li><a href="demo.html">Live demo</a></li>
+          <li><a href="approach.html">Approach</a></li>
+          <li><a href="use-cases.html">Use cases</a></li>
+          <li><a href="services.html">Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Elsewhere</h3>
+        <ul>
+          <li><a href="https://reprostats.org" rel="noopener">Reprostats open-source packages</a></li>
+          <li><a href="https://github.com/reprosia-hq" rel="noopener">GitHub organisation</a></li>
+          <li><a href="mailto:team@reprosia.com">team@reprosia.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="disclaimer">Reprosia is an independent, early-stage project. No customers, certifications or regulatory endorsements are claimed. Software described here is designed around 21 CFR Part 11 and EU Annex 11; using it does not by itself make an organisation compliant. Validation and quality-system responsibilities stay with the regulated organisation. &copy; <span id="year">2026</span> Reprosia.</p>
+  </div>
+</footer>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/demo.js" defer></script>
+</body>
+</html>
