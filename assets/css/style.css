@@ -510,6 +510,17 @@ a.note { text-decoration: none; color: inherit; }
 a.note .lnk { color: var(--accent); }
 a.note:hover { border-color: var(--accent); }
 
+/* About: portrait */
+.person { display: grid; grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
+.portrait { margin: 0; position: relative; aspect-ratio: 4 / 5; border-radius: var(--r); overflow: hidden; border: 1px solid var(--panel-line); background: var(--panel); }
+.portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.portrait::after { content: ""; position: absolute; inset: -1px; pointer-events: none;
+  background: linear-gradient(var(--bracket), var(--bracket)) top left / 18px 2px no-repeat, linear-gradient(var(--bracket), var(--bracket)) top left / 2px 18px no-repeat,
+              linear-gradient(var(--bracket), var(--bracket)) bottom right / 18px 2px no-repeat, linear-gradient(var(--bracket), var(--bracket)) bottom right / 2px 18px no-repeat; }
+.person-text h2 { margin-bottom: 16px; }
+.person-text p { max-width: 62ch; }
+@media (max-width: 720px) { .person { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 260px; } }
+
 /* ======== Flight recorder ======== */
 :root {
   --bg:#0B0D10; --bg-2:#101418; --panel:#14181E; --panel-strong:#1B2027; --panel-line:#2D353F;
