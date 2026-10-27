@@ -483,19 +483,18 @@ a.card .lnk, a.card .tile-go { color: var(--accent); text-decoration: none; font
 a.card:hover .lnk { text-decoration: underline; }
 a.card:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--panel-line)); }
 
-/* Theme switch: a chain block travelling between day and night nodes */
-.theme-switch { display: inline-flex; align-items: center; gap: 10px; margin-left: 6px; padding: 3px; background: none; border: 0; color: var(--text-2); cursor: pointer; font: inherit; border-radius: 999px; }
+/* Theme switch: a plain toggle glyph, off in light and on in dark */
+.theme-switch { display: inline-flex; align-items: center; gap: 8px; margin-left: 6px; padding: 6px; background: none; border: 0; color: var(--text-2); cursor: pointer; font: inherit; border-radius: 8px; }
+.theme-switch:hover { color: var(--text); }
 .theme-switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.ts-track { position: relative; display: block; width: 46px; height: 24px; border-radius: 999px; background: var(--panel); border: 1px solid var(--panel-line); }
-.ts-track::before { content: ""; position: absolute; left: 12px; right: 12px; top: 50%; border-top: 1.5px dashed var(--panel-line); }
-.ts-ico { position: absolute; top: 5px; width: 12px; height: 12px; opacity: .75; }
-.ts-sun { left: 5px; } .ts-moon { right: 5px; }
-.ts-block { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 4px; background: var(--accent); box-shadow: 0 0 10px -2px var(--accent); transition: transform .28s cubic-bezier(.4,1.4,.5,1); }
-.theme-switch[aria-pressed="true"] .ts-block { transform: translateX(22px); }
-.theme-switch:hover .ts-track { border-color: var(--accent); }
+.ts-svg { display: block; }
+.ts-dot { transition: transform .2s ease; }
+.theme-switch[aria-pressed="true"] .ts-dot { transform: translateX(5px); }
+.theme-switch[aria-pressed="true"] .ts-pill { fill: color-mix(in srgb, var(--accent) 30%, transparent); stroke: var(--accent); }
+.theme-switch[aria-pressed="true"] .ts-dot { fill: var(--accent); }
 .ts-label { display: none; font-size: .95rem; }
-@media (prefers-reduced-motion: reduce) { .ts-block { transition: none; } }
-@media (max-width: 860px) { .theme-switch { margin: 10px 0 0 6px; align-self: flex-start; } .ts-label { display: inline; } }
+@media (prefers-reduced-motion: reduce) { .ts-dot { transition: none; } }
+@media (max-width: 860px) { .theme-switch { margin: 10px 0 0 4px; align-self: flex-start; } .ts-label { display: inline; } }
 
 /* ======== Flight recorder ======== */
 :root {
