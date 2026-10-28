@@ -1,3 +1,4 @@
 /* Optional features. Leave RP_ASSISTANT_URL empty to keep the demo fully offline.
-   To switch the AI assistant off again, set the line below back to "". */
-window.RP_ASSISTANT_URL = "https://reprosia-assistant.reprosia.workers.dev";
+   To switch on the AI assistant, deploy reprosia-assistant and paste its URL here, e.g.
+   window.RP_ASSISTANT_URL = "https://reprosia-assistant.YOURNAME.workers.dev"; */
+window.RP_ASSISTANT_URL = "";

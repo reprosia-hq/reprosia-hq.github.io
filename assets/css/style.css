@@ -496,7 +496,17 @@ a.card:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--panel-l
 .theme-switch[aria-pressed="true"] .ts-moon { opacity: 0; transform: rotate(60deg) scale(.6); }
 .ts-label { display: none; font-size: .95rem; color: var(--text-2); }
 @media (prefers-reduced-motion: reduce) { .ts-box, .ts-ico { transition: none; } .theme-switch:hover .ts-box, .theme-switch:active .ts-box { transform: none; } }
-@media (max-width: 860px) { .theme-switch { margin: 10px 0 0 4px; align-self: flex-start; } .ts-label { display: inline; } }
+@media (max-width: 860px) {
+  .theme-switch { order: 2; margin: 0 0 0 auto; align-self: center; flex: none; }
+  .ts-label { display: none; }
+  .menu-btn { order: 3; margin: 0 0 0 10px; min-height: 40px; padding: 8px 16px; flex: none; }
+  .brand { min-width: 0; }
+  .bar { gap: 8px; min-height: 60px; }
+  .nav { order: 4; top: 100%; max-height: calc(100vh - 62px); max-height: calc(100dvh - 62px); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .nav-link { min-height: 44px; display: flex; align-items: center; }
+  .dd-item { min-height: 44px; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+  .dd-item small, .dd-item span { margin: 0; }
+}
 
 /* Field notes */
 .eyebrow { font: 500 .82rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
