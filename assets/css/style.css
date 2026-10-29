@@ -530,6 +530,7 @@ a.note:hover { border-color: var(--accent); }
 .person-text h2 { margin-bottom: 16px; }
 .person-text p { max-width: 62ch; }
 @media (max-width: 720px) { .person { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 260px; } }
+.trail td:first-child { width: 5%; } .trail td:nth-child(6) { font-family: var(--font-mono); font-size: .85rem; white-space: nowrap; }
 
 /* ======== Flight recorder ======== */
 :root {
