@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://reprosia.com/</loc></url>
-  <url><loc>https://reprosia.com/case-study.html</loc></url>
-  <url><loc>https://reprosia.com/legal.html</loc></url>
-  <url><loc>https://reprosia.com/privacy.html</loc></url>
-  <url><loc>https://reprosia.com/note-fda-ema-principles.html</loc></url>
-  <url><loc>https://reprosia.com/platform.html</loc></url>
-  <url><loc>https://reprosia.com/demo.html</loc></url>
-  <url><loc>https://reprosia.com/approach.html</loc></url>
-  <url><loc>https://reprosia.com/use-cases.html</loc></url>
   <url><loc>https://reprosia.com/services.html</loc></url>
-  <url><loc>https://reprosia.com/agents.html</loc></url>
-  <url><loc>https://reprosia.com/notes.html</loc></url>
+  <url><loc>https://reprosia.com/demo.html</loc></url>
   <url><loc>https://reprosia.com/about.html</loc></url>
   <url><loc>https://reprosia.com/contact.html</loc></url>
+  <url><loc>https://reprosia.com/solutions/approach.html</loc></url>
+  <url><loc>https://reprosia.com/solutions/use-cases.html</loc></url>
+  <url><loc>https://reprosia.com/solutions/tooling.html</loc></url>
+  <url><loc>https://reprosia.com/notes/</loc></url>
+  <url><loc>https://reprosia.com/notes/fda-ema-principles.html</loc></url>
+  <url><loc>https://reprosia.com/notes/worked-example.html</loc></url>
+  <url><loc>https://reprosia.com/notes/assistants-and-agents.html</loc></url>
+  <url><loc>https://reprosia.com/legal/notice.html</loc></url>
+  <url><loc>https://reprosia.com/legal/privacy.html</loc></url>
 </urlset>
