@@ -30,7 +30,7 @@
     <a class="brand" href="/" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
     <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav class="nav" id="site-nav" aria-label="Main">
-      <div class="dd"><button class="nav-link dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="dd-sol">Solutions<svg class="chev" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><div class="dd-menu" id="dd-sol"><a class="dd-item" href="/solutions/approach.html"><b>Approach</b><small>How the FDA and EMA principles map to records</small></a><a class="dd-item" href="/solutions/use-cases.html"><b>Use cases</b><small>Where teams use this in practice</small></a><a class="dd-item" href="/solutions/tooling.html"><b>Tooling</b><small>The open-source packages and where they fit</small></a></div></div><a class="nav-link is-demo" href="/demo.html">Live demo</a><a class="nav-link" href="/services.html">Services</a><div class="dd"><button class="nav-link dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="dd-res">Resources<svg class="chev" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><div class="dd-menu" id="dd-res"><a class="dd-item" href="/#start"><b>Evidence kit</b><small>Free templates for AI-use governance</small></a><a class="dd-item" href="/notes/worked-example.html"><b>Worked example</b><small>A real run, with the output</small></a><a class="dd-item" href="/notes/"><b>Field notes</b><small>Practical write-ups</small></a></div></div><a class="nav-link" href="/about.html" aria-current="page">About</a><a class="nav-link" href="/contact.html">Contact</a>
+      <a class="nav-link" href="/approach.html">How it works</a><a class="nav-link is-demo" href="/demo.html">Live demo</a><a class="nav-link" href="/services.html">Services</a><a class="nav-link" href="/notes/">Notes</a><a class="nav-link" href="/about.html" aria-current="page">About</a><a class="nav-link" href="/contact.html">Contact</a>
     </nav>
     <button class="theme-switch" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch theme">
         <span class="ts-box" aria-hidden="true">
@@ -77,6 +77,18 @@
 
 <section class="section">
   <div class="wrap">
+    <div class="section-head"><h2>Work you can check.</h2><p>Everything here is public, so you can read it yourself.</p></div>
+    <dl class="defs">
+      <div><dt>Open-source packages on CRAN</dt><dd><a href="https://cran.r-project.org/package=regulog" rel="noopener">regulog</a>, <a href="https://cran.r-project.org/package=lineager" rel="noopener">lineager</a>, <a href="https://cran.r-project.org/package=reproducr" rel="noopener">reproducr</a> and <a href="https://cran.r-project.org/package=bayprior" rel="noopener">bayprior</a>, with documentation and source.</dd></div>
+      <div><dt>A worked example</dt><dd>A real run of regulog and reproducr on public data, including a tamper test and its limits: <a href="/notes/worked-example.html">read the example</a>.</dd></div>
+      <div><dt>Writing</dt><dd><a href="/notes/fda-ema-principles.html">What the FDA and EMA AI principles ask of your R workflow</a>, and two design notes on <a href="/notes/evaluating-ai-agents.html">evaluating AI coding agents</a> and <a href="/notes/ai-assisted-qc.html">AI-assisted independent QC</a>.</dd></div>
+      <div><dt>Free templates</dt><dd>An <a href="/#start">evidence kit</a>: workflow intake sheet, AI-use register, context-of-use page and reviewer checklist.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
     <div class="section-head"><h2>Where things stand.</h2></div>
     <dl class="defs">
       <div><dt>Open source</dt><dd>The packages are on CRAN. They are usable on their own.</dd></div>
@@ -107,12 +119,11 @@
         <h3>Site</h3>
         <ul>
           <li><a href="/services.html">Services</a></li>
-          <li><a href="/solutions/approach.html">Approach</a></li>
-          <li><a href="/solutions/use-cases.html">Use cases</a></li>
-          <li><a href="/solutions/tooling.html">Tooling</a></li>
+          <li><a href="/approach.html">How it works</a></li>
           <li><a href="/demo.html">Live demo</a></li>
           <li><a href="/notes/worked-example.html">Worked example</a></li>
           <li><a href="/notes/">Field notes</a></li>
+          <li><a href="/#start">Evidence kit</a></li>
         </ul>
       </div>
       <div>

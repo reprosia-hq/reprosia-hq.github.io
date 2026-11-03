@@ -532,6 +532,14 @@ a.note:hover { border-color: var(--accent); }
 @media (max-width: 720px) { .person { grid-template-columns: minmax(0, 1fr); } .portrait { max-width: 260px; } }
 .trail td:first-child { width: 5%; } .trail td:nth-child(6) { font-family: var(--font-mono); font-size: .85rem; white-space: nowrap; }
 
+/* Risk question on service items; jump chips; anchor offset */
+.ask { display: block; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+section[id] { scroll-margin-top: 84px; }
+.proof a.chip { text-decoration: none; }
+.sec-lead { padding-bottom: 0; }
+.sec-lead + section { padding-top: 24px; }
+.page-head + .sec-lead { padding-top: 24px; }
+
 /* ======== Flight recorder ======== */
 :root {
   --bg:#0B0D10; --bg-2:#101418; --panel:#14181E; --panel-strong:#1B2027; --panel-line:#2D353F;

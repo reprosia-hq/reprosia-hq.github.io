@@ -30,7 +30,7 @@
     <a class="brand" href="/" aria-label="Reprosia home"><svg class="brand-mark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="9" height="9" rx="1.5"/><rect x="15" y="9" width="9" height="9" rx="1.5"/><rect x="2" y="16" width="9" height="8" rx="1.5"/><path d="M11 6.5h4.5V9M11 20h4.5v-2"/></svg>Reprosia</a>
     <button class="icon-btn menu-btn" id="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav class="nav" id="site-nav" aria-label="Main">
-      <div class="dd"><button class="nav-link dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="dd-sol">Solutions<svg class="chev" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><div class="dd-menu" id="dd-sol"><a class="dd-item" href="/solutions/approach.html"><b>Approach</b><small>How the FDA and EMA principles map to records</small></a><a class="dd-item" href="/solutions/use-cases.html"><b>Use cases</b><small>Where teams use this in practice</small></a><a class="dd-item" href="/solutions/tooling.html"><b>Tooling</b><small>The open-source packages and where they fit</small></a></div></div><a class="nav-link is-demo" href="/demo.html">Live demo</a><a class="nav-link" href="/services.html" aria-current="page">Services</a><div class="dd"><button class="nav-link dd-btn" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="dd-res">Resources<svg class="chev" viewBox="0 0 12 8" width="10" height="7" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><div class="dd-menu" id="dd-res"><a class="dd-item" href="/#start"><b>Evidence kit</b><small>Free templates for AI-use governance</small></a><a class="dd-item" href="/notes/worked-example.html"><b>Worked example</b><small>A real run, with the output</small></a><a class="dd-item" href="/notes/"><b>Field notes</b><small>Practical write-ups</small></a></div></div><a class="nav-link" href="/about.html">About</a><a class="nav-link" href="/contact.html">Contact</a>
+      <a class="nav-link" href="/approach.html">How it works</a><a class="nav-link is-demo" href="/demo.html">Live demo</a><a class="nav-link" href="/services.html" aria-current="page">Services</a><a class="nav-link" href="/notes/">Notes</a><a class="nav-link" href="/about.html">About</a><a class="nav-link" href="/contact.html">Contact</a>
     </nav>
     <button class="theme-switch" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme" title="Switch theme">
         <span class="ts-box" aria-hidden="true">
@@ -65,14 +65,15 @@
   <div class="wrap">
     <div class="section-head"><h2>What we help with.</h2></div>
     <dl class="defs">
-      <div><dt>Regulatory R implementation</dt><dd>Validation strategy, SOPs and system validation documentation for using R in GxP environments.</dd></div>
-      <div><dt>Package and environment validation</dt><dd>IQ/OQ/PQ documentation for R and R packages, using regulog's qualification scripts where they help.</dd></div>
-      <div><dt>Reproducibility and provenance audits</dt><dd>An independent review of an analysis pipeline: undocumented dependencies, environment risks, excluded records and a prioritised fix list.</dd></div>
-      <div><dt>SAS-to-R migration</dt><dd>Equivalence testing between SAS and R outputs, parallel validation documentation and a migration audit trail.</dd></div>
-      <div><dt>Statistical programming and analysis support</dt><dd>Analysis programming and code review (R specialism, SAS and Python workflows understood), and general statistical consultancy on study analysis, including Bayesian prior documentation with bayprior.</dd></div>
-      <div><dt>Shiny application development</dt><dd>R Shiny apps for analysis review, data exploration and internal tools, built with reproducibility in mind: version-controlled, tested, with the environment locked. Whether an app needs formal validation depends on how your team uses it, and that is agreed with your quality group. One public example: the <a href="https://ndohpenn-bayprior.share.connect.posit.cloud" rel="noopener">live demo of the bayprior app</a>, an open-source tool for documenting Bayesian priors.</dd></div>
-      <div><dt>AI-use governance</dt><dd>What to log when an AI assistant helps with an analysis, who reviews it and how to replay it. Starts with the free evidence kit.</dd></div>
-      <div><dt>Qualification of AI-assisted workflows <span class="tag tag-plan" style="margin-left:6px">Planned</span></dt><dd>Evidence packs for teams adopting AI assistants in statistical programming. This follows the audited AI assist work and is not yet offered.</dd></div>
+      <div><dt>Regulatory R implementation</dt><dd><span class="ask">Can we explain our use of R to an auditor?</span>Validation strategy, SOPs and system validation documentation for using R in GxP environments.</dd></div>
+      <div><dt>Package and environment validation</dt><dd><span class="ask">Can we show this package is installed and behaves as specified?</span>IQ/OQ/PQ documentation for R and R packages, using regulog's qualification scripts where they help.</dd></div>
+      <div><dt>Reproducibility and provenance audits</dt><dd><span class="ask">Can someone else re-run this and get the same numbers?</span>An independent review of an analysis pipeline: undocumented dependencies, environment risks, excluded records and a prioritised fix list.</dd></div>
+      <div><dt>SAS-to-R migration</dt><dd><span class="ask">Do the R outputs match what SAS gave us?</span>Equivalence testing between SAS and R outputs, parallel validation documentation and a migration audit trail.</dd></div>
+      <div><dt>Statistical programming and analysis support</dt><dd><span class="ask">Do we have the capacity, and a second pair of eyes, for this analysis?</span>Analysis programming and code review (R specialism, SAS and Python workflows understood), and general statistical consultancy on study analysis, including Bayesian prior documentation with bayprior.</dd></div>
+      <div><dt>Shiny application development</dt><dd><span class="ask">Can our team explore and review results without writing code?</span>R Shiny apps for analysis review, data exploration and internal tools, built with reproducibility in mind: version-controlled, tested, with the environment locked. Whether an app needs formal validation depends on how your team uses it, and that is agreed with your quality group. One public example: the <a href="https://ndohpenn-bayprior.share.connect.posit.cloud" rel="noopener">live demo of the bayprior app</a>, an open-source tool for documenting Bayesian priors.</dd></div>
+      <div><dt>AI-use governance</dt><dd><span class="ask">What do we log when an AI assistant helps, and who reviews it?</span>What to log when an AI assistant helps with an analysis, who reviews it and how to replay it. Starts with the free evidence kit.</dd></div>
+      <div><dt>Evaluation of AI coding agents <span class="tag tag-plan" style="margin-left:6px">Pilot</span></dt><dd><span class="ask">How often is the code an AI agent writes actually right?</span>Measuring how often an AI coding agent gets routine programming tasks right, using tasks built from your own specifications: repeated attempts, failures sorted by type, an audit log and a short report for your QA group. A measurement, not a certification, and offered as a pilot. <a href="/notes/evaluating-ai-agents.html">How it works</a>.</dd></div>
+      <div><dt>AI-assisted independent QC <span class="tag tag-plan" style="margin-left:6px">Pilot</span></dt><dd><span class="ask">Who decides when two programs disagree?</span>An AI coding agent writes the second, independent program from your specification; a script lists every difference; your QC lead adjudicates each one and the decisions are logged. Run next to your existing QC on one deliverable, so you can compare. Differences often point to gaps in the specification as much as to bugs. <a href="/notes/ai-assisted-qc.html">How it works</a>.</dd></div>
     </dl>
   </div>
 </section>
@@ -122,12 +123,11 @@
         <h3>Site</h3>
         <ul>
           <li><a href="/services.html">Services</a></li>
-          <li><a href="/solutions/approach.html">Approach</a></li>
-          <li><a href="/solutions/use-cases.html">Use cases</a></li>
-          <li><a href="/solutions/tooling.html">Tooling</a></li>
+          <li><a href="/approach.html">How it works</a></li>
           <li><a href="/demo.html">Live demo</a></li>
           <li><a href="/notes/worked-example.html">Worked example</a></li>
           <li><a href="/notes/">Field notes</a></li>
+          <li><a href="/#start">Evidence kit</a></li>
         </ul>
       </div>
       <div>
