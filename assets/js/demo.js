@@ -35,7 +35,7 @@
 
   /* ---------------- Workbench ---------------- */
   var TASKS = {
-    cfb: { title: "Derive change from baseline (ADLB)", code: [
+    cfb: { title: "Derive change from baseline (ADLB)", ds: "ADLB", pkg: "dplyr 1.1.4", code: [
       "adlb <- adlb |>",
       "  dplyr::group_by(USUBJID, PARAMCD) |>",
       "  dplyr::mutate(",
@@ -43,13 +43,13 @@
       "    CHG  = AVAL - BASE",
       "  ) |>",
       "  dplyr::ungroup()"].join("\n") },
-    km: { title: "Median survival by arm (ADTTE)", code: [
+    km: { title: "Median survival by arm (ADTTE)", ds: "ADTTE", pkg: "survival 3.8-3", code: [
       "fit <- survival::survfit(",
       "  survival::Surv(AVAL, 1 - CNSR) ~ TRT01P,",
       "  data = adtte",
       ")",
       "summary(fit)$table[, \"median\"]"].join("\n") },
-    ae: { title: "Flag treatment-emergent adverse events (ADAE)", code: [
+    ae: { title: "Flag treatment-emergent adverse events (ADAE)", ds: "ADAE", pkg: "dplyr 1.1.4", code: [
       "adae <- adae |>",
       "  dplyr::mutate(",
       "    TRTEMFL = dplyr::if_else(",
@@ -58,10 +58,49 @@
       "  )"].join("\n") }
   };
   var TIERS = { explore: ["Exploratory", 1], support: ["Supportive analysis", 1], primary: ["Primary analysis", 2] };
+  var SCOPER = "jsmith";
   var chain, S, verified = true;
+
+  /* Small synthetic datasets, built the same way every time, so the fingerprints are of real bytes.
+     v3 differs from v2 by one corrected value and one added row. */
+  function rng(seed) { var a = seed >>> 0; return function () { a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  function dataRows(task) {
+    var r = rng({ cfb: 11, km: 23, ae: 37 }[task]), rows = [], i, id;
+    function pad(n) { return (n < 10 ? "0" : "") + n; }
+    if (task === "km") {
+      rows.push(["USUBJID", "TRT01P", "AVAL", "CNSR"]);
+      for (i = 1; i <= 24; i++) rows.push(["S" + pad(i), i % 2 ? "Placebo" : "Active", String(20 + Math.floor(r() * 180)), r() < 0.35 ? "1" : "0"]);
+    } else if (task === "cfb") {
+      rows.push(["USUBJID", "PARAMCD", "AVISIT", "ABLFL", "AVAL"]);
+      for (i = 1; i <= 12; i++) { id = "S" + pad(i); var base = 20 + Math.floor(r() * 30); rows.push([id, "ALT", "Baseline", "Y", String(base)]); rows.push([id, "ALT", "Week 12", "", String(base + Math.floor(r() * 12) - 4)]); }
+    } else {
+      rows.push(["USUBJID", "AEDECOD", "ASTDT", "TRTSDT", "TRTEDT"]);
+      var terms = ["Headache", "Nausea", "Fatigue", "Rash"];
+      for (i = 1; i <= 24; i++) rows.push(["S" + pad(1 + (i % 12)), terms[Math.floor(r() * 4)], "2026-02-" + pad(1 + Math.floor(r() * 27)), "2026-02-01", "2026-03-15"]);
+    }
+    return rows;
+  }
+  function bump(row, task) {
+    if (task === "ae") row[2] = row[2] === "2026-02-28" ? "2026-02-27" : "2026-02-28";
+    else { var c = task === "km" ? 2 : 4; row[c] = String(Number(row[c]) + 1); }
+  }
+  function datasetText(task, ver, changeOne) {
+    var rows = dataRows(task).map(function (x) { return x.slice(); });
+    if (ver === "v3") {
+      bump(rows[5], task);
+      rows.push(rows[rows.length - 1].slice()); rows[rows.length - 1][0] = "S99";
+    }
+    if (changeOne) bump(rows[3], task);
+    return rows.map(function (x) { return x.join(","); }).join("\n") + "\n";
+  }
+  function envText(task, bumped) {
+    var p = TASKS[task].pkg.split(" ");
+    return "R 4.4.2; " + p[0] + " " + (bumped ? p[1].replace(/\d+$/, function (n) { return String(Number(n) + 1); }) : p[1]);
+  }
 
   function refresh() {
     return RP.renderChain(chain, $("wb-entries"), $("wb-status"), {
+      clock: true,
       empty: "No entries yet. Record the scope to start the chain.",
       after: function (v) {
         verified = v.bad === -1;
@@ -77,26 +116,37 @@
   function pressed(container, key) {
     [].forEach.call($(container).querySelectorAll(".pill"), function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-k") === key ? "true" : "false"); });
   }
+  function done(btn, text) { btn.disabled = true; btn.textContent = text; btn.classList.add("is-done"); }
+  function norm(n) { return n.replace(/\s+/g, " ").trim(); }
+  function clean(t) { return norm(t).replace(/[|\n\r]/g, "/").slice(0, 120); }
+  function tasks() { return $("task-pills").querySelectorAll(".pill"); }
 
   function initWb() {
     chain = new RP.Chain();
-    S = { task: "cfb", scoped: false, draft: "", final: "", finalHash: "", decisions: [], needed: 1, rejected: false, reviewDone: false, ver: "v3" };
+    S = { task: "cfb", scoped: false, draft: "", final: "", finalHash: "", dataHash: "", envHash: "", dataText: "", decisions: [], needed: 1, rejected: false, reviewDone: false, ver: "v3" };
     pressed("task-pills", "cfb"); pressed("data-pills", "v3");
-    [].forEach.call($("task-pills").querySelectorAll(".pill"), function (b) { b.disabled = false; });
+    [].forEach.call(tasks(), function (b) { b.disabled = false; });
+    [].forEach.call($("data-pills").querySelectorAll(".pill"), function (b) { b.disabled = false; });
     $("tier").disabled = false; $("tier").value = "support";
-    $("btn-scope").disabled = false; $("btn-draft").disabled = false; $("btn-data").disabled = false;
-    $("reviewer").value = "jsmith"; $("reviewer").disabled = false;
-    $("edit-wrap").hidden = true; $("drift").checked = false;
+    $("note-tier").textContent = "Illustrative rule: one named reviewer is enough for this context of use.";
+    [["btn-scope", "Record scope"], ["btn-draft", "Generate draft"], ["btn-data", "Record data and environment"]].forEach(function (x) {
+      var b = $(x[0]); b.disabled = false; b.textContent = x[1]; b.classList.remove("is-done");
+    });
+    $("reviewer").value = "asmith"; $("reviewer").disabled = false; $("reason").value = ""; $("reason").disabled = false;
+    $("edit-wrap").hidden = true; $("drift").checked = false; $("datadrift").checked = false;
     [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = false; });
     $("codeview").textContent = "The draft appears here once generated.";
+    $("promptview").textContent = "Write R code: " + TASKS.cfb.title;
+    $("data-preview").hidden = true; $("data-preview").textContent = "";
     ["rv-verdict", "data-verdict", "replay-verdict"].forEach(function (i) { verdict(i, "info", ""); });
-    lock("st-draft", true); lock("st-review", true); lock("st-data", true); lock("st-replay", true);
+    lock("st-data", true); lock("st-draft", true); lock("st-review", true); lock("st-replay", true);
     refresh();
   }
 
   $("task-pills").addEventListener("click", function (e) {
     var b = e.target.closest(".pill"); if (!b || S.scoped) return;
     S.task = b.getAttribute("data-k"); pressed("task-pills", S.task);
+    $("promptview").textContent = "Write R code: " + TASKS[S.task].title;
   });
   $("tier").addEventListener("change", function () {
     var t = TIERS[$("tier").value];
@@ -108,23 +158,48 @@
     if (S.scoped) return;
     S.scoped = true;
     var tier = $("tier").value; S.needed = TIERS[tier][1];
-    $("btn-scope").disabled = true; $("tier").disabled = true;
-    [].forEach.call($("task-pills").querySelectorAll(".pill"), function (b) { b.disabled = true; });
-    chain.append("Task scoped: " + TASKS[S.task].title, "jsmith", "context=" + TIERS[tier][0] + "; reviewers required=" + S.needed).then(refresh);
-    lock("st-draft", false);
+    done($("btn-scope"), "Scope recorded"); $("tier").disabled = true;
+    [].forEach.call(tasks(), function (b) { b.disabled = true; });
+    chain.append("Task scoped: " + TASKS[S.task].title, SCOPER, "context=" + TIERS[tier][0] + "; reviewers required=" + S.needed).then(refresh);
+    lock("st-data", false);
+  });
+
+  /* Data and environment are fixed before any code is drafted or reviewed. */
+  $("data-pills").addEventListener("click", function (e) {
+    var b = e.target.closest(".pill"); if (!b || $("btn-data").disabled) return;
+    S.ver = b.getAttribute("data-k"); pressed("data-pills", S.ver);
+  });
+  $("btn-data").addEventListener("click", function () {
+    var ds = TASKS[S.task].ds, text = datasetText(S.task, S.ver, false), env = envText(S.task, false);
+    var nrows = text.trim().split("\n").length - 1;
+    done($("btn-data"), "Data and environment recorded");
+    [].forEach.call($("data-pills").querySelectorAll(".pill"), function (b) { b.disabled = true; });
+    S.dataText = text;
+    $("data-preview").textContent = text.split("\n").slice(0, 4).join("\n") + "\n…  (" + nrows + " rows, synthetic)";
+    $("data-preview").hidden = false;
+    Promise.all([RP.sha(text), RP.sha(env)]).then(function (h) {
+      S.dataHash = h[0]; S.envHash = h[1];
+      return chain.append("Input data fingerprinted: " + ds + " " + S.ver, "system", "rows=" + nrows + "; data_sha256=" + RP.short(h[0]))
+        .then(function () { return chain.append("Environment recorded: " + env + " (illustrative)", "system", "env_sha256=" + RP.short(h[1])); });
+    }).then(function () {
+      refresh(); lock("st-draft", false);
+      verdict("data-verdict", "ok", "Recorded " + ds + " " + S.ver + " (" + nrows + " rows) and the environment.");
+    });
   });
 
   /* Simulated draft: canned code streamed in. No model is called. */
   $("btn-draft").addEventListener("click", function () {
-    var code = TASKS[S.task].code, view = $("codeview"), i = 0;
+    var code = TASKS[S.task].code, view = $("codeview"), i = 0, prompt = $("promptview").textContent;
     $("btn-draft").disabled = true; view.textContent = "";
     var caret = el("span", "caret"); view.appendChild(caret);
     function finish() {
       view.textContent = code;
       S.draft = code; S.final = code;
-      RP.sha("Write R code: " + TASKS[S.task].title + "\n" + code).then(function (h) {
-        return chain.append("AI draft captured: prompt, model, output", "assistant", "model=simulated-model-0; output_sha256=" + RP.short(h));
-      }).then(function () { refresh(); lock("st-review", false); });
+      Promise.all([RP.sha(prompt), RP.sha(code)]).then(function (h) {
+        S.finalHash = h[1];
+        return chain.append("AI draft captured: prompt, model, output", "assistant",
+          "model=simulated-model-0; prompt_sha256=" + RP.short(h[0]) + "; output_sha256=" + RP.short(h[1]));
+      }).then(function () { done($("btn-draft"), "Draft captured"); refresh(); lock("st-review", false); });
     }
     if (RP.reduce) { finish(); return; }
     var timer = setInterval(function () {
@@ -134,76 +209,86 @@
     }, 18);
   });
 
-  function record(name, kind, code) {
+  function record(name, kind, code, reason, before) {
     return RP.sha(code).then(function (h) {
       S.finalHash = h; S.decisions.push({ name: name, kind: kind });
-      return chain.append("Review decision: " + kind, name, "reviewer " + S.decisions.length + " of " + S.needed + "; code_sha256=" + RP.short(h));
+      var d = "reviewer " + S.decisions.length + " of " + S.needed;
+      if (kind === "edited") d += "; reason=" + reason + "; code_sha256_before=" + RP.short(before) + "; code_sha256_after=" + RP.short(h);
+      else d += "; code_sha256=" + RP.short(h);
+      return chain.append("Review decision: " + kind, name, d);
     }).then(function () {
       refresh();
       if (S.decisions.length >= S.needed) {
         S.reviewDone = true;
         verdict("rv-verdict", "ok", "Review complete: " + S.decisions.length + " of " + S.needed + " reviewer decisions recorded.");
         [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = true; });
-        $("reviewer").disabled = true;
-        lock("st-data", false);
+        $("reviewer").disabled = true; $("reason").disabled = true;
+        lock("st-replay", false);
       } else {
         verdict("rv-verdict", "info", "Reviewer " + S.decisions.length + " recorded. A second, different reviewer is needed.");
-        $("reviewer").value = "asmith";
+        $("reviewer").value = "bjones"; $("reason").value = "";
       }
     });
   }
+  function reviewerName() {
+    var name = norm($("reviewer").value);
+    if (!name) { verdict("rv-verdict", "bad", "Enter the reviewer's name first."); return ""; }
+    var low = name.toLowerCase();
+    if (low === SCOPER) { verdict("rv-verdict", "bad", "The reviewer must be a different person from " + SCOPER + ", who scoped the task."); return ""; }
+    if (S.decisions.some(function (d) { return norm(d.name).toLowerCase() === low; })) {
+      verdict("rv-verdict", "bad", "Use a different reviewer for the second decision."); return "";
+    }
+    return name.replace(/\|/g, "/");
+  }
+  function needReason() {
+    var r = clean($("reason").value);
+    if (!r) verdict("rv-verdict", "bad", "Give a reason for an edit or a rejection.");
+    return r;
+  }
   function decide(kind) {
     if (S.rejected || S.reviewDone) return;
-    var name = $("reviewer").value.trim();
-    if (!name) { verdict("rv-verdict", "bad", "Enter the reviewer's name first."); return; }
-    if (S.decisions.some(function (d) { return d.name.toLowerCase() === name.toLowerCase(); })) {
-      verdict("rv-verdict", "bad", "Use a different reviewer for the second decision."); return;
-    }
+    var name = reviewerName(); if (!name) return;
     if (kind === "rejected") {
+      var why = needReason(); if (!why) return;
       S.rejected = true;
-      chain.append("Review decision: rejected", name, "reviewer " + (S.decisions.length + 1) + " of " + S.needed).then(refresh);
+      chain.append("Review decision: rejected", name, "reviewer " + (S.decisions.length + 1) + " of " + S.needed + "; reason=" + why).then(refresh);
       verdict("rv-verdict", "bad", "Draft rejected by " + name + ". A rejected draft cannot be replayed. Reset to try again.");
       [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = true; });
       return;
     }
-    if (kind === "edited") { $("edit-area").value = S.final; $("edit-wrap").hidden = false; $("edit-area").focus(); return; }
+    if (kind === "edited") { if (!needReason()) return; verdict("rv-verdict", "info", ""); $("edit-area").value = S.final; $("edit-wrap").hidden = false; $("edit-area").focus(); return; }
     record(name, "accepted", S.final);
   }
   $("rv-accept").addEventListener("click", function () { decide("accepted"); });
   $("rv-edit").addEventListener("click", function () { decide("edited"); });
   $("rv-reject").addEventListener("click", function () { decide("rejected"); });
   $("btn-submit-edit").addEventListener("click", function () {
-    var text = $("edit-area").value.trim();
-    if (!text) { verdict("rv-verdict", "bad", "The edited code cannot be empty."); return; }
+    var text = $("edit-area").value.replace(/\s+$/, "");
+    if (!text.trim()) { verdict("rv-verdict", "bad", "The edited code cannot be empty."); return; }
+    if (text === S.final) { verdict("rv-verdict", "bad", "The code is unchanged. Edit it, or use Accept."); return; }
+    var name = reviewerName(); if (!name) return;
+    var why = needReason(); if (!why) return;
+    var before = S.finalHash;
     S.final = text; $("edit-wrap").hidden = true;
     $("codeview").textContent = text;
-    record($("reviewer").value.trim(), "edited", text);
+    record(name, "edited", text, why, before);
   });
 
-  $("data-pills").addEventListener("click", function (e) {
-    var b = e.target.closest(".pill"); if (!b) return;
-    S.ver = b.getAttribute("data-k"); pressed("data-pills", S.ver);
-  });
-  $("btn-data").addEventListener("click", function () {
-    var label = "dataset " + S.ver;
-    $("btn-data").disabled = true;
-    RP.sha("dataset|" + S.task + "|" + S.ver).then(function (h) {
-      return chain.append("Input data fingerprinted: " + label, "system", "sha256=" + RP.short(h));
-    }).then(function () {
-      refresh(); lock("st-replay", false);
-      verdict("data-verdict", "ok", "Data version recorded: " + label + ".");
-    });
-  });
-
+  /* Replay: recompute the three fingerprints and say which one differs. */
   $("btn-replay").addEventListener("click", function () {
-    var drift = $("drift").checked;
-    RP.sha(S.final + (drift ? "|package-version-changed" : "")).then(function (h) {
-      var match = h === S.finalHash;
-      chain.append("Replay in locked environment: " + (match ? "outputs match" : "difference detected"), "system",
-        "code_sha256=" + RP.short(h) + "; drift=" + (drift ? "package version changed" : "none")).then(refresh);
+    var pkgDrift = $("drift").checked, dataDrift = $("datadrift").checked;
+    var text = dataDrift ? datasetText(S.task, S.ver, true) : S.dataText;
+    Promise.all([RP.sha(S.final), RP.sha(text), RP.sha(envText(S.task, pkgDrift))]).then(function (h) {
+      var diff = [];
+      if (h[0] !== S.finalHash) diff.push("code");
+      if (h[1] !== S.dataHash) diff.push("data");
+      if (h[2] !== S.envHash) diff.push("environment");
+      var match = !diff.length;
+      chain.append("Replay check: " + (match ? "fingerprints match" : "difference detected (" + diff.join(", ") + ")"), "system",
+        "code_sha256=" + RP.short(h[0]) + "; data_sha256=" + RP.short(h[1]) + "; env_sha256=" + RP.short(h[2])).then(refresh);
       verdict("replay-verdict", match ? "ok" : "bad", match
-        ? "The replay matches the logged result."
-        : "The replay differs from the logged result. This is the situation reproducr's drift detection is built to flag.");
+        ? "Code, data and environment fingerprints all match the logged ones."
+        : "The " + diff.join(" and ") + " fingerprint differs from the logged one. This is the situation reproducr's drift detection is built to flag.");
     });
   });
 
@@ -213,9 +298,10 @@
   $("btn-export-md").addEventListener("click", function () {
     var lines = ["# Audit summary (browser demo)", "", "Generated: " + new Date().toISOString(),
       "Chain verification: " + (verified ? "intact" : "BROKEN"), "",
-      "| # | Actor | Event | Hash |", "|---|---|---|---|"];
-    chain.entries.forEach(function (e) { lines.push("| " + e.seq + " | " + e.actor + " | " + e.orig.replace(/\|/g, "/") + " | `" + RP.short(e.hash) + "` |"); });
-    lines.push("", "This summary comes from a simulation in the Reprosia browser demo. No model was called and the log is not regulog output.");
+      "| # | Time (UTC) | Actor | Event | Hash |", "|---|---|---|---|---|"];
+    chain.entries.forEach(function (e) { lines.push("| " + e.seq + " | " + e.ts + " | " + e.actor + " | " + e.orig.replace(/\|/g, "/") + " | `" + RP.short(e.hash) + "` |"); });
+    lines.push("", "Each hash is SHA-256 of the previous hash followed by `seq|timestamp|actor|event|detail` (full text in the JSON export). Hash chains reveal edits; they do not prevent them.",
+      "", "This summary comes from a simulation in the Reprosia browser demo. No model was called and the log is not regulog output.");
     RP.download("reprosia-demo-audit-summary.md", lines.join("\n"), "text/markdown");
   });
   $("btn-reset").addEventListener("click", initWb);
@@ -386,7 +472,9 @@
     var aiBtn = el("button", "btn btn-ghost", "Ask the AI assistant (beta)");
     aiBtn.type = "button"; aiBtn.id = "s-ai";
     form.appendChild(aiBtn);
-    var note = el("p", "note", "The assistant sends your question to a language model through a Reprosia proxy and answers only from this site's notes. Do not enter confidential or personal data. Answers can be wrong; this is not regulatory advice. Nothing is stored by Reprosia.");
+    var lead = $("demo-lead");
+    if (lead) lead.textContent = "Three tools. The workbench, the readiness check and the keyword search run entirely on this page: nothing is uploaded, and the AI draft in the workbench is simulated. The exception is the optional AI assistant (beta) on the last tab, which sends your question to a language model.";
+    var note = el("p", "note note-warn", "The AI assistant sends your question to a language model (Anthropic) through a Reprosia proxy and answers only from this site's notes. Do not enter confidential or personal data. Answers can be wrong; this is not regulatory advice. Reprosia does not store your question; the model provider processes it under its own terms.");
     form.parentNode.insertBefore(note, $("s-chips"));
     aiBtn.addEventListener("click", function () {
       var q = $("s-input").value.trim();

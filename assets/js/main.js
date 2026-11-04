@@ -200,6 +200,7 @@
         return out;
       });
     }
+    RP.weakHash = true; /* no Web Crypto here: the value below is NOT a SHA-256 */
     var h = 2166136261 >>> 0;
     for (var i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
     var s = ("00000000" + h.toString(16)).slice(-8);
@@ -242,6 +243,8 @@
     return {
       generated: new Date().toISOString(),
       note: "Illustrative export from the Reprosia browser demo. Not output from regulog.",
+      algorithm: "hash = SHA-256 of the UTF-8 text previous_hash + seq|timestamp|actor|event|detail, hex-encoded. The first previous_hash is 64 zeros. Recompute every hash to verify the chain without this page. Hash chains reveal edits; they do not prevent them. A real deployment also stores the latest hash outside the system.",
+      hashing: RP.weakHash ? "NOT SHA-256: this browser has no Web Crypto, so the demo used a non-cryptographic fallback" : "SHA-256 (Web Crypto)",
       chain_verified: verified,
       entries: this.entries.map(function (e) {
         return { seq: e.seq, timestamp: e.ts, actor: e.actor, event: e.what, detail: e.detail, previous_hash: e.prev, hash: e.hash };
@@ -255,6 +258,7 @@
     opts = opts || {};
     return chain.verify().then(function (v) {
       listEl.innerHTML = "";
+      if (opts.clock) listEl.classList.add("is-clock");
       if (!chain.entries.length) {
         var li0 = document.createElement("li");
         li0.className = "entry";
@@ -269,7 +273,9 @@
         li.className = "entry" + (r.altered ? " is-altered" : "") + (bad ? " is-bad" : "");
         if (opts.animate && !RP.reduce) { li.className += " appear"; li.style.animationDelay = (i * 0.28) + "s"; }
 
-        var seq = document.createElement("span"); seq.className = "entry-seq"; seq.textContent = String(i + 1);
+        var seq = document.createElement("span"); seq.className = "entry-seq";
+        if (opts.clock) { seq.textContent = r.ts.slice(11, 19) + "Z"; seq.title = r.ts + " (UTC), entry " + (i + 1); }
+        else seq.textContent = String(i + 1);
         var main = document.createElement("div"); main.className = "entry-main";
         var what = document.createElement("div"); what.className = "entry-what"; what.textContent = r.what;
         var actor = document.createElement("div"); actor.className = "entry-actor";
@@ -281,7 +287,7 @@
         btn.setAttribute("aria-label", (r.altered ? "Undo change to entry " : "Alter entry ") + (i + 1));
         btn.addEventListener("click", function () {
           chain.toggle(i);
-          RP.renderChain(chain, listEl, statusEl, { empty: opts.empty, after: opts.after });
+          RP.renderChain(chain, listEl, statusEl, { empty: opts.empty, after: opts.after, clock: opts.clock });
         });
 
         var hash = document.createElement("div"); hash.className = "entry-hash";
@@ -304,7 +310,7 @@
           statusEl.className = "ledger-status"; statusEl.textContent = "Chain empty";
         } else if (v.bad === -1) {
           statusEl.className = "ledger-status";
-          statusEl.textContent = "Chain intact: " + chain.entries.length + " of " + chain.entries.length + " entries verify";
+          statusEl.textContent = "Chain intact: " + chain.entries.length + " of " + chain.entries.length + " entries verify" + (RP.weakHash ? " (demo hash, not SHA-256)" : "");
         } else {
           statusEl.className = "ledger-status is-broken";
           statusEl.textContent = "Chain broken at entry " + (v.bad + 1) + ": record no longer matches";
