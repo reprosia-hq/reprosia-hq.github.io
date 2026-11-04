@@ -540,6 +540,42 @@ section[id] { scroll-margin-top: 84px; }
 .sec-lead + section { padding-top: 24px; }
 .page-head + .sec-lead { padding-top: 24px; }
 
+
+/* Demo page additions */
+.check { display: flex; gap: 10px; align-items: center; margin: 0 0 8px; font-size: 0.92rem; color: var(--text-2); cursor: pointer; }
+.check input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); flex: none; }
+.note.note-warn { color: var(--text-2); border-left: 3px solid var(--accent); padding-left: 10px; }
+.btn.is-done[disabled] { opacity: 1; background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
+.entries.is-clock .entry { grid-template-columns: 84px minmax(0, 1fr) auto; }
+.entries.is-clock .entry-seq { font-size: 0.78rem; white-space: nowrap; }
+.entries.is-clock .entry-seq::before { content: none; }
+@media (max-width: 640px) { .entries.is-clock .entry { grid-template-columns: 76px minmax(0, 1fr) auto; } }
+/* In the demo, .note is small helper text. A site-wide .note card style (field-note cards) otherwise boxes it. */
+.tabpanel .note, .ledger .note { display: block; padding: 0; background: none; border: 0; border-radius: 0; gap: 0; }
+.tabpanel .note.note-warn { border-left: 3px solid var(--accent); padding-left: 10px; }
+
+/* Demo round 2: stale reviews, status text, readable log */
+[hidden] { display: none !important; }
+.flow { margin: 0 0 16px; color: var(--text-2); font-size: 0.95rem; max-width: 80ch; }
+.flow b { color: var(--text); }
+.btn.is-done[disabled] { background: none; box-shadow: none; border: 0; padding: 4px 0; cursor: default; color: var(--ok); font-weight: 600; }
+.btn.is-done[disabled]::before { content: "\2713\00a0"; }
+.rv-status { margin: 0 0 12px; padding: 8px 12px; border-left: 3px solid var(--ok); font-size: 0.9rem; color: var(--text); background: var(--ok-soft); }
+.rv-status.is-stale { border-left-color: var(--bad); background: var(--bad-soft); font-weight: 600; }
+.verdict.bad, .verdict.warn { color: var(--text); border-left: 3px solid var(--bad); }
+.verdict.warn { background: rgba(255, 106, 26, 0.14); border-left-color: var(--accent); }
+.tabpanel .panel-sub, .tabpanel .note, .ledger .note { color: var(--text-2); }
+.bench .entry-actor { color: var(--text-2); font-size: 0.9rem; }
+.bench .entry-hash { color: var(--text-2); font-size: 0.8rem; }
+.bench .ledger { position: sticky; top: 72px; }
+.bench > div:first-child { padding-bottom: 24vh; }
+.bench .entries { max-height: calc(100vh - 360px); min-height: 220px; overflow-y: auto; padding-right: 4px; }
+@media (max-width: 960px) {
+  .bench .ledger { position: relative; top: auto; }
+  .bench > div:first-child { padding-bottom: 0; }
+  .bench .entries { max-height: 420px; }
+}
+
 /* ======== Flight recorder ======== */
 :root {
   --bg:#0B0D10; --bg-2:#101418; --panel:#14181E; --panel-strong:#1B2027; --panel-line:#2D353F;
@@ -569,16 +605,3 @@ h1 em, h2 em { font-style: normal; background: none; -webkit-text-fill-color: va
 .btn-ghost, .btn.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--panel-line); }
 .ledger, .tile, .panel, .agent, .card, .col, .layers { background: var(--panel); backdrop-filter: none; }
 .tag, .chip, .tab, .pill, .loop li { border-radius: 2px; }
-
-/* Demo page additions */
-.check { display: flex; gap: 10px; align-items: center; margin: 0 0 8px; font-size: 0.92rem; color: var(--text-2); cursor: pointer; }
-.check input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); flex: none; }
-.note.note-warn { color: var(--text-2); border-left: 3px solid var(--accent); padding-left: 10px; }
-.btn.is-done[disabled] { opacity: 1; background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
-.entries.is-clock .entry { grid-template-columns: 84px minmax(0, 1fr) auto; }
-.entries.is-clock .entry-seq { font-size: 0.78rem; white-space: nowrap; }
-.entries.is-clock .entry-seq::before { content: none; }
-@media (max-width: 640px) { .entries.is-clock .entry { grid-template-columns: 76px minmax(0, 1fr) auto; } }
-/* In the demo, .note is small helper text. A site-wide .note card style (field-note cards) otherwise boxes it. */
-.tabpanel .note, .ledger .note { display: block; padding: 0; background: none; border: 0; border-radius: 0; gap: 0; }
-.tabpanel .note.note-warn { border-left: 3px solid var(--accent); padding-left: 10px; }

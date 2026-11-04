@@ -283,11 +283,12 @@
         main.appendChild(what); main.appendChild(actor);
 
         var btn = document.createElement("button");
-        btn.type = "button"; btn.className = "alter-btn"; btn.textContent = r.altered ? "Undo" : "Alter";
-        btn.setAttribute("aria-label", (r.altered ? "Undo change to entry " : "Alter entry ") + (i + 1));
+        btn.type = "button"; btn.className = "alter-btn"; btn.textContent = r.altered ? "Undo" : "Tamper";
+        btn.setAttribute("aria-label", (r.altered ? "Undo tampering with entry " : "Tamper with entry ") + (i + 1));
         btn.addEventListener("click", function () {
+          var keep = listEl.scrollTop;
           chain.toggle(i);
-          RP.renderChain(chain, listEl, statusEl, { empty: opts.empty, after: opts.after, clock: opts.clock });
+          RP.renderChain(chain, listEl, statusEl, { empty: opts.empty, after: opts.after, clock: opts.clock }).then(function () { listEl.scrollTop = keep; });
         });
 
         var hash = document.createElement("div"); hash.className = "entry-hash";

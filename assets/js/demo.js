@@ -45,10 +45,12 @@
       "  dplyr::ungroup()"].join("\n") },
     km: { title: "Median survival by arm (ADTTE)", ds: "ADTTE", pkg: "survival 3.8-3", code: [
       "fit <- survival::survfit(",
-      "  survival::Surv(AVAL, 1 - CNSR) ~ TRT01P,",
+      "  survival::Surv(AVAL, CNSR) ~ TRT01P,",
       "  data = adtte",
       ")",
-      "summary(fit)$table[, \"median\"]"].join("\n") },
+      "summary(fit)$table[, \"median\"]"].join("\n"),
+      fix: /Surv\(\s*AVAL\s*,\s*1\s*-\s*CNSR\s*\)/,
+      bug: "The draft passes CNSR (1 = censored) as the event indicator, so censored subjects count as events and the medians are wrong. The fix is Surv(AVAL, 1 - CNSR)." },
     ae: { title: "Flag treatment-emergent adverse events (ADAE)", ds: "ADAE", pkg: "dplyr 1.1.4", code: [
       "adae <- adae |>",
       "  dplyr::mutate(",
@@ -59,7 +61,7 @@
   };
   var TIERS = { explore: ["Exploratory", 1], support: ["Supportive analysis", 1], primary: ["Primary analysis", 2] };
   var SCOPER = "jsmith";
-  var chain, S, verified = true;
+  var chain, S, verified = true, shown = 0;
 
   /* Small synthetic datasets, built the same way every time, so the fingerprints are of real bytes.
      v3 differs from v2 by one corrected value and one added row. */
@@ -98,12 +100,31 @@
     return "R 4.4.2; " + p[0] + " " + (bumped ? p[1].replace(/\d+$/, function (n) { return String(Number(n) + 1); }) : p[1]);
   }
 
+  function bumpText(text, task) {
+    var rows = text.trim().split("\n").map(function (x) { return x.split(","); });
+    bump(rows[3], task);
+    return rows.map(function (x) { return x.join(","); }).join("\n") + "\n";
+  }
+  function bumpEnv(s) { return s.replace(/\d+$/, function (n) { return String(Number(n) + 1); }); }
+  function rvStatus() {
+    var n = $("rv-status");
+    if (!S.reviewDone && !S.stale) { n.hidden = true; return; }
+    n.hidden = false;
+    n.className = "rv-status " + (S.stale ? "is-stale" : "is-current");
+    n.textContent = S.stale
+      ? "Review status: STALE. The " + S.pending.diff.join(" and ") + " changed after this review, so it no longer covers the current run."
+      : "Review status: current. It covers data " + RP.short(S.dataHash) + " and environment " + RP.short(S.envHash) + ".";
+  }
+
   function refresh() {
     return RP.renderChain(chain, $("wb-entries"), $("wb-status"), {
       clock: true,
       empty: "No entries yet. Record the scope to start the chain.",
       after: function (v) {
         verified = v.bad === -1;
+        var box = $("wb-entries");
+        if (chain.entries.length > shown) box.scrollTop = box.scrollHeight;
+        shown = chain.entries.length;
         $("btn-export-json").disabled = !chain.entries.length;
         $("btn-export-md").disabled = !chain.entries.length;
       }
@@ -123,7 +144,8 @@
 
   function initWb() {
     chain = new RP.Chain();
-    S = { task: "cfb", scoped: false, draft: "", final: "", finalHash: "", dataHash: "", envHash: "", dataText: "", decisions: [], needed: 1, rejected: false, reviewDone: false, ver: "v3" };
+    S = { task: "cfb", scoped: false, draft: "", final: "", finalHash: "", dataHash: "", envHash: "", dataText: "", decisions: [], needed: 1, rejected: false, reviewDone: false, ver: "v3", env: "", stale: false, pending: null, round: 0, replays: 0, lastKey: "" };
+    shown = 0; $("rv-status").hidden = true; $("btn-rereview").hidden = true;
     pressed("task-pills", "cfb"); pressed("data-pills", "v3");
     [].forEach.call(tasks(), function (b) { b.disabled = false; });
     [].forEach.call($("data-pills").querySelectorAll(".pill"), function (b) { b.disabled = false; });
@@ -174,7 +196,7 @@
     var nrows = text.trim().split("\n").length - 1;
     done($("btn-data"), "Data and environment recorded");
     [].forEach.call($("data-pills").querySelectorAll(".pill"), function (b) { b.disabled = true; });
-    S.dataText = text;
+    S.dataText = text; S.env = env;
     $("data-preview").textContent = text.split("\n").slice(0, 4).join("\n") + "\n…  (" + nrows + " rows, synthetic)";
     $("data-preview").hidden = false;
     Promise.all([RP.sha(text), RP.sha(env)]).then(function (h) {
@@ -215,12 +237,19 @@
       var d = "reviewer " + S.decisions.length + " of " + S.needed;
       if (kind === "edited") d += "; reason=" + reason + "; code_sha256_before=" + RP.short(before) + "; code_sha256_after=" + RP.short(h);
       else d += "; code_sha256=" + RP.short(h);
-      return chain.append("Review decision: " + kind, name, d);
+      d += "; data_sha256=" + RP.short(S.dataHash);
+      return chain.append((S.round ? "Re-review decision: " : "Review decision: ") + kind, name, d);
     }).then(function () {
       refresh();
       if (S.decisions.length >= S.needed) {
         S.reviewDone = true;
-        verdict("rv-verdict", "ok", "Review complete: " + S.decisions.length + " of " + S.needed + " reviewer decisions recorded.");
+        var base = "Review complete: " + S.decisions.length + " of " + S.needed + " reviewer decisions recorded.", t = TASKS[S.task], last = S.decisions[S.decisions.length - 1].kind;
+        if (t.bug) {
+          var fixed = t.fix.test(S.final);
+          if (fixed) verdict("rv-verdict", "ok", base + " Your edit fixes the planted error in this draft (Surv(AVAL, 1 - CNSR)). The log keeps the before and after fingerprints and your reason.");
+          else verdict("rv-verdict", "warn", base + " Planted error, still in the code: " + t.bug + " The log proves who decided and what they saw. It cannot show that the review was careful.");
+        } else verdict("rv-verdict", "ok", base);
+        rvStatus();
         [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = true; });
         $("reviewer").disabled = true; $("reason").disabled = true;
         lock("st-replay", false);
@@ -252,7 +281,7 @@
       var why = needReason(); if (!why) return;
       S.rejected = true;
       chain.append("Review decision: rejected", name, "reviewer " + (S.decisions.length + 1) + " of " + S.needed + "; reason=" + why).then(refresh);
-      verdict("rv-verdict", "bad", "Draft rejected by " + name + ". A rejected draft cannot be replayed. Reset to try again.");
+      verdict("rv-verdict", "bad", "Draft rejected by " + name + ". A rejected draft cannot be replayed. Reset to try again." + (TASKS[S.task].bug ? " This draft did contain a planted error: " + TASKS[S.task].bug : ""));
       [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = true; });
       return;
     }
@@ -274,21 +303,59 @@
     record(name, "edited", text, why, before);
   });
 
-  /* Replay: recompute the three fingerprints and say which one differs. */
+  /* Replay: recompute the three fingerprints and say which one differs.
+     A difference after a review makes that review stale until someone reviews the new state. */
   $("btn-replay").addEventListener("click", function () {
     var pkgDrift = $("drift").checked, dataDrift = $("datadrift").checked;
-    var text = dataDrift ? datasetText(S.task, S.ver, true) : S.dataText;
-    Promise.all([RP.sha(S.final), RP.sha(text), RP.sha(envText(S.task, pkgDrift))]).then(function (h) {
+    var text = dataDrift ? bumpText(S.dataText, S.task) : S.dataText, env = pkgDrift ? bumpEnv(S.env) : S.env;
+    Promise.all([RP.sha(S.final), RP.sha(text), RP.sha(env)]).then(function (h) {
       var diff = [];
       if (h[0] !== S.finalHash) diff.push("code");
       if (h[1] !== S.dataHash) diff.push("data");
       if (h[2] !== S.envHash) diff.push("environment");
-      var match = !diff.length;
-      chain.append("Replay check: " + (match ? "fingerprints match" : "difference detected (" + diff.join(", ") + ")"), "system",
-        "code_sha256=" + RP.short(h[0]) + "; data_sha256=" + RP.short(h[1]) + "; env_sha256=" + RP.short(h[2])).then(refresh);
-      verdict("replay-verdict", match ? "ok" : "bad", match
-        ? "Code, data and environment fingerprints all match the logged ones."
-        : "The " + diff.join(" and ") + " fingerprint differs from the logged one. This is the situation reproducr's drift detection is built to flag.");
+      var match = !diff.length, key = h.join("|");
+      if (key === S.lastKey) { verdict("replay-verdict", "info", "Same fingerprints as the last replay, so nothing new was logged. Change an input, or tick neither box for a clean pass."); return; }
+      S.lastKey = key; S.replays++;
+      var inputs = [pkgDrift ? "package version changed" : "", dataDrift ? "one data value edited" : ""].filter(Boolean);
+      var title = "Replay check " + S.replays + ": " + (match ? "fingerprints match" : "difference detected (" + diff.join(", ") + ")");
+      var detail = "simulated=" + (inputs.length ? inputs.join(" + ") : "nothing") + "; code_sha256=" + RP.short(h[0]) + "; data_sha256=" + RP.short(h[1]) + "; env_sha256=" + RP.short(h[2]);
+      var p = chain.append(title, "system", detail);
+      if (!match) {
+        var first = !S.stale;
+        S.stale = true; S.pending = { diff: diff, text: text, env: env, dataHash: h[1], envHash: h[2] };
+        if (first) p = p.then(function () {
+          return chain.append("Review marked stale: " + diff.join(", ") + " changed since the review", "system",
+            "review covered code_sha256=" + RP.short(S.finalHash) + "; data_sha256=" + RP.short(S.dataHash) + "; new review required");
+        });
+      }
+      p.then(function () { refresh(); rvStatus(); });
+      if (match) {
+        verdict("replay-verdict", "ok", S.stale
+          ? "These match the logged fingerprints, but an earlier replay already marked the review stale. The log keeps that mark: record a new review, or Reset."
+          : "Code, data and environment fingerprints all match the logged ones. The review still covers this run.");
+        $("btn-rereview").hidden = !S.stale;
+      } else {
+        verdict("replay-verdict", "bad", "The " + diff.join(" and ") + " fingerprint differs from the logged one, so the review no longer covers this run. It is now marked stale. This is what the reproducr package's drift detection flags.");
+        $("btn-rereview").hidden = false;
+      }
+    });
+  });
+
+  /* Adopt the changed state and ask for a new review of it. */
+  $("btn-rereview").addEventListener("click", function () {
+    var q = S.pending; if (!q) return;
+    chain.append("Fingerprints re-recorded after change: " + q.diff.join(", "), "system",
+      "data_sha256=" + RP.short(q.dataHash) + "; env_sha256=" + RP.short(q.envHash) + "; the earlier review does not cover these").then(function () {
+      S.dataText = q.text; S.env = q.env; S.dataHash = q.dataHash; S.envHash = q.envHash;
+      S.stale = false; S.pending = null; S.reviewDone = false; S.rejected = false; S.decisions = []; S.round++; S.lastKey = "";
+      $("data-preview").textContent = q.text.split("\n").slice(0, 4).join("\n") + "\n…  (" + (q.text.trim().split("\n").length - 1) + " rows, synthetic)";
+      [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = false; });
+      $("reviewer").disabled = false; $("reason").disabled = false; $("reason").value = ""; $("edit-wrap").hidden = true;
+      $("drift").checked = false; $("datadrift").checked = false;
+      verdict("replay-verdict", "info", ""); $("btn-rereview").hidden = true; lock("st-replay", true);
+      verdict("rv-verdict", "info", "Re-review needed: the earlier decision covered the earlier fingerprints. Record a new decision for the current ones.");
+      rvStatus(); refresh();
+      $("st-review").scrollIntoView({ behavior: RP.reduce ? "auto" : "smooth", block: "center" });
     });
   });
 
