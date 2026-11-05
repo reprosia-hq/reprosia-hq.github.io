@@ -244,6 +244,7 @@
       if (S.decisions.length >= S.needed) {
         S.reviewDone = true;
         var base = "Review complete: " + S.decisions.length + " of " + S.needed + " reviewer decisions recorded.", t = TASKS[S.task], last = S.decisions[S.decisions.length - 1].kind;
+        if (kind === "edited") base += " " + name + " edited the draft: code fingerprint " + RP.short(before) + " became " + RP.short(S.finalHash) + ". Reason: " + reason + ".";
         if (t.bug) {
           var fixed = t.fix.test(S.final);
           if (fixed) verdict("rv-verdict", "ok", base + " Your edit fixes the planted error in this draft (Surv(AVAL, 1 - CNSR)). The log keeps the before and after fingerprints and your reason.");
@@ -254,7 +255,7 @@
         $("reviewer").disabled = true; $("reason").disabled = true;
         lock("st-replay", false);
       } else {
-        verdict("rv-verdict", "info", "Reviewer " + S.decisions.length + " recorded. A second, different reviewer is needed.");
+        verdict("rv-verdict", "info", "Reviewer " + S.decisions.length + " recorded" + (kind === "edited" ? " (edited: code fingerprint " + RP.short(before) + " became " + RP.short(S.finalHash) + ")" : "") + ". A second, different reviewer is needed.");
         $("reviewer").value = "bjones"; $("reason").value = "";
       }
     });
@@ -285,18 +286,24 @@
       [].forEach.call($("seg-review").querySelectorAll("button"), function (b) { b.disabled = true; });
       return;
     }
-    if (kind === "edited") { if (!needReason()) return; verdict("rv-verdict", "info", ""); $("edit-area").value = S.final; $("edit-wrap").hidden = false; $("edit-area").focus(); return; }
+    if (kind === "edited") { if (!needReason()) return; verdict("rv-verdict", "info", ""); $("edit-area").value = S.final; $("edit-wrap").hidden = false; $("edit-verdict").hidden = true; $("edit-area").focus();
+      $("edit-wrap").scrollIntoView({ behavior: RP.reduce ? "auto" : "smooth", block: "center" }); return; }
     record(name, "accepted", S.final);
   }
   $("rv-accept").addEventListener("click", function () { decide("accepted"); });
   $("rv-edit").addEventListener("click", function () { decide("edited"); });
   $("rv-reject").addEventListener("click", function () { decide("rejected"); });
+  $("btn-cancel-edit").addEventListener("click", function () {
+    $("edit-wrap").hidden = true; verdict("edit-verdict", "info", ""); verdict("rv-verdict", "info", "Edit cancelled. Nothing was logged.");
+  });
   $("btn-submit-edit").addEventListener("click", function () {
     var text = $("edit-area").value.replace(/\s+$/, "");
-    if (!text.trim()) { verdict("rv-verdict", "bad", "The edited code cannot be empty."); return; }
-    if (text === S.final) { verdict("rv-verdict", "bad", "The code is unchanged. Edit it, or use Accept."); return; }
-    var name = reviewerName(); if (!name) return;
-    var why = needReason(); if (!why) return;
+    function bad(m) { verdict("edit-verdict", "bad", m); }
+    if (!text.trim()) { bad("The edited code cannot be empty."); return; }
+    if (text === S.final) { bad("The code is unchanged. Change something in the box, or press Cancel and use Accept."); return; }
+    var name = reviewerName(); if (!name) { bad($("rv-verdict").textContent); return; }
+    var why = needReason(); if (!why) { bad("Give a reason for the edit."); return; }
+    verdict("edit-verdict", "info", "");
     var before = S.finalHash;
     S.final = text; $("edit-wrap").hidden = true;
     $("codeview").textContent = text;
